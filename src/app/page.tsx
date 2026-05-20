@@ -230,6 +230,18 @@ function Hero() {
         <div className="grid lg:grid-cols-12 gap-16 items-center">
           {/* Left Column - Texts & Actions */}
           <div className="lg:col-span-7 text-left flex flex-col items-start">
+            <Link
+              href="https://github.com/besaoct/newgap" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 mb-6 group cursor-pointer "
+            >
+              <span className="w-2 inline h-[0.8px] rounded-full bg-secondary animate-pulse " />
+              <span className="text-[10px] font-mono-label font-bold uppercase tracking-[0.2em] text-secondary text-justify items-center gap-1.5">
+                Open-source political party
+                <ArrowUpRight className="size-3.5 inline transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 text-secondary" />
+              </span>
+            </Link>
             <h1 className="text-headline-xl-mobile sm:text-headline-xl font-headline-xl text-on-surface mb-8 uppercase leading-[0.95] tracking-tight"> 
               <span className="text-secondary">NEW</span><span className="text-primary">GAP</span> IS THE ONLY <br/> WAY TO <br />
               <span className="text-secondary italic">FILL THE GAP.</span>
@@ -533,7 +545,7 @@ function Alliance() {
         <div className="flex flex-col lg:flex-row items-start gap-16">
           <div className="flex-1 reveal-on-scroll">
             <div className="flex items-center gap-4 mb-6">
-              <div className="size-14 animate-bounce text-primary flex items-center justify-center shrink-0">
+              <div className="size-14 animate-pulse text-primary flex items-center justify-center shrink-0">
                 <CockroachSvg className="w-full h-full" />
               </div>
               <div className="bg-primary text-on-primary px-4 py-2 text-mono-label font-bold uppercase tracking-[0.2em] text-xs">
