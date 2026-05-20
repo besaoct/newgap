@@ -978,7 +978,7 @@ const handlePrint = async () => {
 
               {submitError && (
                 <div className="bg-[#d46b4e]/10 border border-[#d46b4e] text-[#d46b4e] p-3 text-xs font-mono-label font-bold uppercase tracking-wider">
-                  ⚠️ {submitError}
+                  Oops! {submitError}
                 </div>
               )}
 
