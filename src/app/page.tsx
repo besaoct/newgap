@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 import { logoSvgPaths } from "@/lib/logo-svg-paths";
 import { useRevealOnScroll } from "@/hooks/use-reveal-on-scroll";
 import {
@@ -19,9 +20,10 @@ import {
   finalWord,
   ctas,
 } from "@/data/content";
+import { X } from "lucide-react";
 
 const MAX = "max-w-7xl mx-auto w-full";
-const PAD = "px-container-padding-mobile md:px-container-padding-desktop";
+const PAD = "px-container-padding-mobile lg:px-container-padding-desktop";
 
 function FormattedText({ text }: { text: string }) {
   if (!text || !text.includes('NEWGAP')) return <>{text}</>;
@@ -41,6 +43,40 @@ function FormattedText({ text }: { text: string }) {
 }
 
 // Client-side particle animation for the Alliance swarm metaphor
+// Cockroach Vector SVG Component
+function CockroachSvg({ className = "size-8" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+      {/* Antennae */}
+      <path d="M12 6C11 3 8 2 6 2M12 6C13 3 16 2 18 2" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
+      {/* Legs (Left) */}
+      <path d="M9 10C6 9 5 8 4 8" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+      <path d="M8.5 13C5.5 13 4.5 13 3.5 13.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+      <path d="M9 16C6 17 5 18.5 4 19.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+      {/* Legs (Right) */}
+      <path d="M15 10C18 9 19 8 20 8" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+      <path d="M15.5 13C18.5 13 19.5 13 20.5 13.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+      <path d="M15 16C18 17 19 18.5 20 19.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+      {/* Head */}
+      <ellipse cx="12" cy="7" rx="2" ry="1.5" fill="currentColor" />
+      {/* Body / Elytra */}
+      <rect x="9.5" y="8" width="5" height="11" rx="2.5" fill="currentColor" />
+      {/* Spine line */}
+      <line x1="12" y1="8" x2="12" y2="18.5" stroke="var(--background)" strokeWidth="0.8" />
+    </svg>
+  );
+}
+
+// SVG Strings for dynamic DOM insertion in SwarmSwarm
+const cockroachSvgString = `<svg viewBox="0 0 24 24" fill="none" style="width:100%; height:100%;"><path d="M12 6C11 3 8 2 6 2M12 6C13 3 16 2 18 2" stroke="currentColor" stroke-width="1" stroke-linecap="round" fill="none" /><path d="M9 10C6 9 5 8 4 8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" /><path d="M8.5 13C5.5 13 4.5 13 3.5 13.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" /><path d="M9 16C6 17 5 18.5 4 19.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" /><path d="M15 10C18 9 19 8 20 8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" /><path d="M15.5 13C18.5 13 19.5 13 20.5 13.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" /><path d="M15 16C18 17 19 18.5 20 19.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" /><ellipse cx="12" cy="7" rx="2" ry="1.5" fill="currentColor" /><rect x="9.5" y="8" width="5" height="11" rx="2.5" fill="currentColor" /><line x1="12" y1="8" x2="12" y2="18.5" stroke="var(--background)" stroke-width="0.8" /></svg>`;
+
+const lightningSvgString = `<svg viewBox="0 0 24 24" fill="currentColor" style="width:100%; height:100%;"><path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" /></svg>`;
+
+const sunburstSvgString = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:100%; height:100%;"><circle cx="12" cy="12" r="3" fill="currentColor" /><path d="M12 2v4M12 18v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M2 12h4M18 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83" stroke-linecap="round" /></svg>`;
+
+const hexagonSvgString = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:100%; height:100%;"><path d="M12 2l8.66 5v10L12 22l-8.66-5V7z" /></svg>`;
+
+// Client-side particle animation for the Alliance swarm metaphor
 const SwarmSwarm = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -48,20 +84,31 @@ const SwarmSwarm = () => {
     const container = containerRef.current;
     if (!container) return;
 
-    const icons = ["🪳", "🪳", "⚡", "✺", "⬡"];
-    const count = 25;
+    const items = [
+      { html: cockroachSvgString, color: "var(--primary)" },
+      { html: cockroachSvgString, color: "var(--primary)" },
+      { html: cockroachSvgString, color: "var(--primary)" },
+      { html: cockroachSvgString, color: "var(--primary)" },
+      { html: lightningSvgString, color: "var(--secondary)" },
+      { html: sunburstSvgString, color: "var(--on-surface-variant)" },
+      { html: hexagonSvgString, color: "var(--outline)" }
+    ];
+    const count = 40;
     const intervals: NodeJS.Timeout[] = [];
     const elements: HTMLDivElement[] = [];
 
     for (let i = 0; i < count; i++) {
       const el = document.createElement("div");
-      el.innerHTML = icons[Math.floor(Math.random() * icons.length)];
+      const iconObj = items[Math.floor(Math.random() * items.length)];
+      el.innerHTML = iconObj.html;
+      el.style.color = iconObj.color;
       el.style.position = "absolute";
-      el.style.fontSize = Math.random() * 20 + 12 + "px";
+      el.style.width = Math.random() * 20 + 14 + "px";
+      el.style.height = el.style.width;
       el.style.left = Math.random() * 100 + "%";
       el.style.top = Math.random() * 100 + "%";
-      el.style.opacity = (Math.random() * 0.15 + 0.05).toString();
-      el.style.filter = "grayscale(100%)";
+      el.style.opacity = (Math.random() * 0.35 + 0.25).toString();
+      el.style.filter = "grayscale(20%)";
       el.style.pointerEvents = "none";
       el.style.transition = `all ${Math.random() * 4 + 2}s cubic-bezier(0.4, 0, 0.2, 1)`;
       container.appendChild(el);
@@ -82,13 +129,13 @@ const SwarmSwarm = () => {
     };
   }, []);
 
-  return <div ref={containerRef} className="absolute inset-0 opacity-30 pointer-events-none z-0" />;
+  return <div ref={containerRef} className="absolute inset-0 opacity-100 pointer-events-none z-0" />;
 };
 
 function AnimatedProtest() {
   return (
     <div className="relative w-full max-w-lg mx-auto aspect-square flex items-center justify-center overflow-hidden">
-      <svg viewBox="0 0 900 900" className="w-full h-full select-none pointer-events-none">
+      <svg viewBox="0 0 950 950" className="w-full h-full select-none pointer-events-none">
         <defs>
           <clipPath id="hand-cut">
             <rect x="0" y="0" width="950" height="800" />
@@ -184,7 +231,7 @@ function Hero() {
           {/* Left Column - Texts & Actions */}
           <div className="lg:col-span-7 text-left flex flex-col items-start">
             <h1 className="text-headline-xl-mobile sm:text-headline-xl font-headline-xl text-on-surface mb-8 uppercase leading-[0.95] tracking-tight"> 
-              <span className="text-secondary">NEW</span><span className="text-primary">GAP</span> IS THE ONLY WAY TO <br />
+              <span className="text-secondary">NEW</span><span className="text-primary">GAP</span> IS THE ONLY <br/> WAY TO <br />
               <span className="text-secondary italic">FILL THE GAP.</span>
             </h1>
             <p className="text-body-md font-mono-label uppercase tracking-[0.3em] text-on-surface-variant mb-10 font-bold"><FormattedText text={partyInfo.fullName} /></p>
@@ -194,11 +241,13 @@ function Hero() {
               </blockquote>
             </div>
             <div className="flex flex-col sm:flex-row gap-6 w-full sm:w-auto">
-              <a href={ctas.primary.url} className="btn-retro-primary px-12 py-6 text-sm font-bold w-full sm:w-auto text-center">
-                {ctas.primary.label}
+              <a href={ctas.primary.url} className="btn-retro-primary px-12 py-6 text-sm font-bold w-full sm:w-auto text-center flex items-center justify-center gap-1.5">
+                {ctas.primary.label.replace("↗", "").trim()}
+                <ArrowUpRight className="w-4 h-4 shrink-0" />
               </a>
-              <a href={ctas.secondary.url} target="_blank" rel="noreferrer" className="btn-retro-secondary px-12 py-6 text-sm font-bold w-full sm:w-auto text-center">
-                {ctas.secondary.label}
+              <a href={ctas.secondary.url} target="_blank" rel="noreferrer" className="btn-retro-secondary px-12 py-6 text-sm font-bold w-full sm:w-auto text-center flex items-center justify-center gap-1.5">
+                {ctas.secondary.label.replace("↗", "").trim()}
+                <ArrowUpRight className="w-4 h-4 shrink-0" />
               </a>
             </div>
             <p className="mt-12 text-mono-label text-on-surface-variant uppercase tracking-widest font-mono-label">{partyInfo.hq}</p>
@@ -225,7 +274,7 @@ function Preamble() {
         <blockquote className="text-body-lg font-body-lg text-on-surface leading-relaxed italic border-l-2 border-primary/40 pl-8 mb-12 max-w-5xl">
           {preamble.quote}
         </blockquote>
-        <div className="grid md:grid-cols-2 gap-12">
+        <div className="grid lg:grid-cols-2 gap-12">
           <p className="text-body-md text-on-surface-variant leading-relaxed font-light"><FormattedText text={preamble.body} /></p>
           <p className="text-body-md text-on-surface-variant leading-relaxed font-light">{preamble.closing}</p>
         </div>
@@ -243,16 +292,16 @@ function FiveWordsSection() {
   return (
     <section className={`py-32  overflow-hidden`}>
       <div className={`${MAX} ${PAD}`}>
-        <div className="mb-20 flex flex-col md:flex-row md:items-end justify-between gap-8">
+        <div className="mb-20 flex flex-col lg:flex-row lg:items-end justify-between gap-8">
           <div className="max-w-2xl">
             <h2 className="text-label-caps font-label-caps text-primary uppercase mb-6 tracking-[0.4em]">The Preamble Foundation</h2>
             <p className="text-headline-lg font-headline-lg uppercase leading-tight text-on-surface">
               Six words that <span className="text-secondary">redefine</span> our existence.
             </p>
           </div>
-          <div className="text-stroke text-8xl font-black hidden md:block select-none font-mono-label">06 WORDS</div>
+          <div className="text-stroke text-8xl font-black hidden lg:block select-none font-mono-label">06 WORDS</div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-px bg-on-surface/10 border border-on-surface/10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 lg:grid-cols-2 gap-px bg-on-surface/10 border border-on-surface/10">
           {preambleWords.map((w) => (
             <div key={w.numeral} className="group relative p-10 bg-background hover:bg-surface-container-low transition-all duration-500 overflow-hidden reveal-on-scroll min-h-[380px] flex flex-col justify-between">
               <div>
@@ -277,7 +326,7 @@ function Pillars() {
   return (
     <section id="pillars" className={`py-32 bg-surface-container-lowest border-y border-on-surface/10 scroll-mt-16`}>
       <div className={`${MAX} ${PAD}`}>
-        <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+        <div className="flex flex-col lg:flex-row justify-between items-end mb-20 gap-8">
           <div className="reveal-on-scroll">
             <h2 className="text-label-caps font-label-caps text-secondary uppercase mb-6 tracking-[0.4em]">Core Pillars</h2>
             <h3 className="text-headline-lg font-headline-lg uppercase max-w-xl text-on-surface font-extrabold">
@@ -288,7 +337,7 @@ function Pillars() {
             Rejecting the inefficiency of the past for a verified, meritocratic future.
           </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
           {featured.map((t) => (
             <div key={t.title} className="brutalist-border p-10 bg-background card-hover reveal-on-scroll">
               <div className="flex justify-between items-start mb-8">
@@ -302,7 +351,7 @@ function Pillars() {
             </div>
           ))}
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 lg:grid-cols-4 gap-6">
           {rest.map((t) => (
             <div key={t.title} className="brutalist-border p-6 bg-background card-hover reveal-on-scroll">
               <span className="material-symbols-outlined text-on-surface mb-4 block" style={{ fontSize: "1.75rem" }}>{t.icon}</span>
@@ -324,7 +373,7 @@ function WhatWeStandFor() {
         <h3 className="text-headline-lg font-headline-lg uppercase leading-tight text-on-surface mb-16 max-w-4xl font-extrabold">
           Ten <span className="text-secondary italic">non-negotiables.</span>
         </h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-on-surface/10 border border-on-surface/10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-px bg-on-surface/10 border border-on-surface/10">
           {whatWeStandFor.map((s, i) => (
             <div key={s.title} className="p-8 bg-background reveal-on-scroll flex flex-col justify-between">
               <div>
@@ -357,7 +406,7 @@ function Leadership() {
         <h3 className="text-headline-lg font-headline-lg uppercase leading-tight text-on-surface mb-16 max-w-4xl font-extrabold">
           Governance is a <span className="text-primary italic">profession.</span>
         </h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {leadershipCriteria.map((l) => (
             <div key={l.role} className="brutalist-border p-8 bg-background card-hover reveal-on-scroll flex flex-col justify-between">
               <div>
@@ -447,7 +496,7 @@ function GapBanner() {
 function Join({ onJoinClick }: { onJoinClick: () => void }) {
   return (
     <section id="join" className={`py-32 bg-primary/5 border-y border-primary/20 scroll-mt-16`}>
-      <div className={`${MAX} ${PAD} grid md:grid-cols-2 gap-16 items-stretch`}>
+      <div className={`${MAX} ${PAD} grid lg:grid-cols-2 gap-16 items-stretch`}>
         <div className="reveal-on-scroll flex flex-col justify-between">
           <div>
             <h2 className="text-label-caps font-label-caps text-primary uppercase mb-6 tracking-[0.4em]">Membership Protocol</h2>
@@ -481,10 +530,12 @@ function Alliance() {
     <section id="alliance" className={`py-32 bg-surface-container/30 relative overflow-hidden scroll-mt-16`}>
       <SwarmSwarm />
       <div className={`${MAX} ${PAD} relative z-10`}>
-        <div className="flex flex-col md:flex-row items-start gap-16">
+        <div className="flex flex-col lg:flex-row items-start gap-16">
           <div className="flex-1 reveal-on-scroll">
             <div className="flex items-center gap-4 mb-6">
-              <span className="text-5xl animate-bounce">{allianceSection.emoji}</span>
+              <div className="size-14 animate-bounce text-primary flex items-center justify-center shrink-0">
+                <CockroachSvg className="w-full h-full" />
+              </div>
               <div className="bg-primary text-on-primary px-4 py-2 text-mono-label font-bold uppercase tracking-[0.2em] text-xs">
                 {allianceSection.status}
               </div>
@@ -520,8 +571,9 @@ function Alliance() {
             </div>
             <div className="bg-primary/5 brutalist-border border-primary/30 p-8 backdrop-blur-md">
               <p className="text-body-md text-on-surface leading-relaxed font-light"><FormattedText text={allianceSection.openNote} /></p>
-              <a href={ctas.secondary.url} target="_blank" rel="noreferrer" className="btn-retro-secondary inline-block mt-6 px-6 py-3 text-xs font-bold">
-                {ctas.secondary.label}
+              <a href={ctas.secondary.url} target="_blank" rel="noreferrer" className="btn-retro-secondary inline-flex items-center gap-1.5 mt-6 px-6 py-3 text-xs font-bold">
+                {ctas.secondary.label.replace("↗", "").trim()}
+                <ArrowUpRight className="w-3.5 h-3.5 shrink-0" />
               </a>
             </div>
           </div>
@@ -537,7 +589,7 @@ function FinalWord() {
       <div className={`${MAX} ${PAD}`}>
         <h2 className="text-label-caps font-label-caps text-outline uppercase mb-16 tracking-[1em] font-extrabold">The Commitment</h2>
         {finalWord.lines.map((line) => (
-          <p key={line} className="text-headline-lg md:text-headline-xl font-headline-xl uppercase mb-10 leading-none text-on-surface font-extrabold tracking-tight">
+          <p key={line} className="text-headline-lg lg:text-headline-xl font-headline-xl uppercase mb-10 leading-none text-on-surface font-extrabold tracking-tight">
             <FormattedText text={line} />
           </p>
         ))}
@@ -554,11 +606,11 @@ function FinalWord() {
 function Footer() {
   return (
     <footer className={`border-t border-on-surface/10 py-10`}>
-      <div className={`${MAX} ${PAD} flex flex-col md:flex-row items-center justify-between gap-4 text-mono-label font-mono-label uppercase tracking-widest text-on-surface-variant`}>
+      <div className={`${MAX} ${PAD} flex flex-col lg:flex-row items-center justify-between gap-4 text-mono-label font-mono-label uppercase tracking-widest text-on-surface-variant`}>
         <div className="">
           <span className="text-secondary">NEW</span><span className="text-primary font-bold">GAP</span> · {partyInfo.preamble.founding}</div>
         <div className="font-mono-label text-[10px]">{partyInfo.hq}</div>
-        <div className="font-semibold text-xs">© The People — No Rights Reserved</div>
+        <div className="font-semibold text-xs">© NEWGAP — No Rights Reserved</div>
       </div>
     </footer>
   );
@@ -901,7 +953,7 @@ const handlePrint = async () => {
           className="absolute top-4 right-4 bg-[#f6f5f0] border-2 border-[#1a1a1a] hover:bg-[#d46b4e]/20 p-2 font-black transition-all flex items-center justify-center text-xs aspect-square select-none leading-none z-10"
           style={{ boxShadow: '2px 2px 0px #000' }}
         >
-          ✕
+          <X/>
         </button>
 
         {step === "form" ? (
@@ -931,7 +983,7 @@ const handlePrint = async () => {
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs font-mono-label uppercase tracking-wider text-[#1a1a1a] mb-2 font-bold">
                     Phone Number
@@ -943,7 +995,7 @@ const handlePrint = async () => {
                     onChange={handleInputChange}
                     required
                     placeholder="Mobile number"
-                    className="w-full bg-[#f6f5f0] border border-[#1a1a1a] px-4 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-[#d46b4e] font-mono-label"
+                    className="w-full min-w-0 bg-[#f6f5f0] border border-[#1a1a1a] px-4 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-[#d46b4e] font-mono-label"
                   />
                 </div>
                 <div>
@@ -956,7 +1008,7 @@ const handlePrint = async () => {
                     value={formData.dob}
                     onChange={handleInputChange}
                     required
-                    className="w-full bg-[#f6f5f0] border border-[#1a1a1a] px-4 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-[#d46b4e] font-mono-label"
+                    className="w-full min-w-0 bg-[#f6f5f0] border border-[#1a1a1a] px-4 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-[#d46b4e] font-mono-label"
                   />
                 </div>
               </div>
