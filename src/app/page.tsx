@@ -21,6 +21,7 @@ import {
   ctas,
 } from "@/data/content";
 import { X } from "lucide-react";
+import NextImage from "next/image";
 
 const MAX = "max-w-7xl mx-auto w-full";
 const PAD = "px-container-padding-mobile lg:px-container-padding-desktop";
@@ -191,7 +192,14 @@ function Nav({ onJoinClick }: { onJoinClick: () => void }) {
     <header className="fixed top-0 inset-x-0 z-50 backdrop-blur-md bg-background/70 border-b border-on-surface/10">
       <div className={`${MAX} ${PAD} flex items-center justify-between h-24 gap-10`}>
         <Link href="/" className="flex items-center justify-center gap-0">
-          <img src="/logo-transparent.png" alt="NEWGAP Logo" className="size-24 object-contain" />
+          <NextImage 
+          width={100}
+          height={100}
+          priority
+          fetchPriority="high"
+          loading="eager"  
+          src="/logo-transparent.png" alt="NEWGAP Logo" className="size-24 object-contain" />
+       
           <div className="flex flex-col mt-4  justify-center items-start">
             <div className="flex gap-0 text-headline-md leading-[0.85] tracking-tighter uppercase font-headline-xl text-on-surface">
                <span className=" leading-[0.85] text-secondary tracking-tighter ">
@@ -201,7 +209,9 @@ function Nav({ onJoinClick }: { onJoinClick: () => void }) {
               GAP
             </span>
             </div>
-            <span className="font-mono-label text-[11px] tracking-[0.15em] text-primary uppercase mt-1.5 font-bold">
+          <p className="font-thin text-[7px] text-on-surface uppercase">New Generation Action Party</p>
+       
+            <span className="font-mono-label text-[8px] tracking-[0.15em] text-primary uppercase font-thin">
                INDIA · EST. 2026
             </span>
           </div>
@@ -229,6 +239,7 @@ function Hero() {
         <div className="grid lg:grid-cols-12 gap-16 items-center">
           {/* Left Column - Texts & Actions */}
           <div className="lg:col-span-7 text-left flex flex-col items-start">
+           {/* <p className="text-body-md font-mono-label uppercase tracking-[0.3em] text-on-surface-variant mb-2 font-bold"><FormattedText text={partyInfo.fullName} /></p> */}
             <Link
               href="https://github.com/besaoct/newgap" 
               target="_blank" 
@@ -245,9 +256,9 @@ function Hero() {
               <span className="text-secondary">NEW</span><span className="text-primary">GAP</span> IS THE ONLY <br/> WAY TO <br />
               <span className="text-secondary italic">FILL THE GAP.</span>
             </h1>
-            <p className="text-body-md font-mono-label uppercase tracking-[0.3em] text-on-surface-variant mb-10 font-bold"><FormattedText text={partyInfo.fullName} /></p>
-            <div className="mb-16">
-              <blockquote className="text-body-lg font-body-lg text-on-surface-variant leading-relaxed  border-l-2 border-primary/30 pl-8 text-left ">
+     
+            <div className="mb-12">
+              <blockquote className="text-body-lg font-serif text-on-surface-variant leading-relaxed  border-l-2 border-primary/30 pl-8 text-left ">
                 <FormattedText text={partyInfo.preamble.subtitle} />
               </blockquote>
             </div>
@@ -282,7 +293,7 @@ function Preamble() {
         <h3 className="text-headline-lg-mobile md:text-headline-lg font-headline-lg uppercase leading-tight text-on-surface mb-12 max-w-4xl">
           The founding <span className="text-secondary italic">contract.</span>
         </h3>
-        <blockquote className="text-body-lg font-body-lg text-on-surface leading-relaxed  border-l-2 border-primary/40 pl-8 mb-12 max-w-5xl">
+        <blockquote className="text-body-lg font-serif  text-on-surface leading-relaxed  border-l-2 border-primary/40 pl-8 mb-12 max-w-5xl">
           {preamble.quote}
         </blockquote>
         <div className="grid lg:grid-cols-2 gap-12">
@@ -544,7 +555,7 @@ function Alliance() {
         <div className="flex flex-col lg:flex-row items-start gap-16">
           <div className="flex-1 reveal-on-scroll">
             <div className="flex items-center gap-4 mb-6">
-              <div className="size-14 animate-pulse text-primary flex items-center justify-center shrink-0">
+              <div className="size-14 text-primary flex items-center justify-center shrink-0">
                 <CockroachSvg className="w-full h-full" />
               </div>
               <div className="bg-primary text-on-primary px-4 py-2 text-mono-label font-bold uppercase tracking-[0.2em] text-xs">
@@ -557,7 +568,7 @@ function Alliance() {
             <p className="text-mono-label text-on-surface-variant uppercase tracking-widest mb-10 font-bold font-mono-label">{allianceSection.sub}</p>
             <div className="space-y-4 mb-8">
               {allianceSection.quotes.map((q) => (
-                <p key={q} className="text-body-lg text-on-surface   border-l-2 border-primary/30 pl-6">{q}</p>
+                <p key={q} className="text-body-lg text-on-surface   border-l-2 block font-serif border-primary/30 pl-6">{q}</p>
               ))}
             </div>
             <p className="text-body-md text-on-surface-variant mb-6 leading-relaxed font-light"><FormattedText text={allianceSection.preamble} /></p>
@@ -871,7 +882,7 @@ const buildCardCanvas = (): Promise<HTMLCanvasElement> => {
   };
 
   // ── logo then draw ─────────────────────────────────
-  const logoImg = new Image();
+  const logoImg = new Image(); 
   logoImg.crossOrigin = "anonymous";
   logoImg.src = "/logo-transparent.png";
 
