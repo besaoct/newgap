@@ -624,19 +624,49 @@ function MembershipModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => 
     if (!formData.name || !formData.phone || !formData.dob || !formData.email) return;
 
     setIsSubmitting(true);
+    setSubmitError("");
+
+    let existingEmails: string[] = [];
+    let existingUniqueIds: string[] = [];
+
+    try {
+      // Fetch existing records for validation via server proxy
+      const checkRes = await fetch("/api/check-records");
+      if (checkRes.ok) {
+        const data = await checkRes.json();
+        existingEmails = data.emails || [];
+        existingUniqueIds = data.uniqueIds || [];
+      } else {
+        console.warn("Could not retrieve existing records for validation.");
+      }
+    } catch (err) {
+      console.error("Error calling validation API:", err);
+    }
+
+    // Email validation
+    const userEmail = formData.email.trim().toLowerCase();
+    if (existingEmails.includes(userEmail)) {
+      setSubmitError("Email is already registered. You cannot apply again.");
+      setIsSubmitting(false);
+      return;
+    }
 
     // Generate unique ID 
     const name   = formData.name;
-    const dob    = formData.dob;               // "DDMMYY"
-
+    const dob    = formData.dob;               // "DDMMYY" or "YYYY-MM-DD"
     const consonantPart = getConsonants(name);         // e.g. "JHN"
     const hexYear       = getDobYearHex(dob);         // "7D1"
     const username      = `${consonantPart}${hexYear}`;  // e.g. "JHN7D1"
-        
-    const suffix        = getTimestampSuffix();        // e.g. "20250520143055"
-
-    const generatedId   = `NG-${username}${suffix}`;
     
+    // Ensure the ID is unique
+    let generatedId = "";
+    let attempts = 0;
+    const baseSuffix = getTimestampSuffix();
+    do {
+      const suffix = attempts === 0 ? baseSuffix : `${baseSuffix}-${attempts}`;
+      generatedId = `NG-${username}${suffix}`;
+      attempts++;
+    } while (existingUniqueIds.includes(generatedId));
 
     setUniqueId(generatedId);
 
@@ -667,11 +697,12 @@ function MembershipModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => 
         },
         body: body.toString()
       });
-    } catch (err) {
-      console.error("Google Form submission error: ", err);
-    } finally {
       setIsSubmitting(false);
       setStep("continue");
+    } catch (err) {
+      console.error("Google Form submission error: ", err);
+      setSubmitError("Failed to submit form. Please check your connection and try again.");
+      setIsSubmitting(false);
     }
   };
 
