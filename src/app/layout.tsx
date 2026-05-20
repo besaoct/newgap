@@ -18,6 +18,7 @@ export const viewport: Viewport = {
   themeColor: "#22572c",
   width: "device-width",
   initialScale: 1,
+  viewportFit: "cover",
 };
 
 export const metadata: Metadata = {
@@ -25,6 +26,14 @@ export const metadata: Metadata = {
   title: {
     default: "NEWGAP — New Generation Action Party · India",
     template: "%s | NEWGAP"
+  },
+  appleWebApp: {
+    capable: true,
+    title: "NEWGAP",
+    statusBarStyle: "default",
+  },
+  other: {
+    "mobile-web-app-capable": "yes",
   },
   description: "NEWGAP is a digital-first political movement in India standing for educated leadership, zero corruption, secular unity, economic justice, and constitutional adherence. The only way to fill the gap.",
   keywords: [
