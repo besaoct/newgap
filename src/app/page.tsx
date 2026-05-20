@@ -46,29 +46,28 @@ function FormattedText({ text }: { text: string }) {
 // Cockroach Vector SVG Component
 function CockroachSvg({ className = "size-8" }: { className?: string }) {
   return (
-    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-      {/* Antennae */}
-      <path d="M12 6C11 3 8 2 6 2M12 6C13 3 16 2 18 2" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
-      {/* Legs (Left) */}
-      <path d="M9 10C6 9 5 8 4 8" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-      <path d="M8.5 13C5.5 13 4.5 13 3.5 13.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-      <path d="M9 16C6 17 5 18.5 4 19.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-      {/* Legs (Right) */}
-      <path d="M15 10C18 9 19 8 20 8" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-      <path d="M15.5 13C18.5 13 19.5 13 20.5 13.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-      <path d="M15 16C18 17 19 18.5 20 19.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-      {/* Head */}
-      <ellipse cx="12" cy="7" rx="2" ry="1.5" fill="currentColor" />
-      {/* Body / Elytra */}
-      <rect x="9.5" y="8" width="5" height="11" rx="2.5" fill="currentColor" />
-      {/* Spine line */}
-      <line x1="12" y1="8" x2="12" y2="18.5" stroke="var(--background)" strokeWidth="0.8" />
-    </svg>
+   <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="32" cy="32" r="29" fill="none" stroke="#E0651E" stroke-width="3" stroke-dasharray="46 1000" transform="rotate(-90 32 32)"></circle>
+          <circle cx="32" cy="32" r="29" fill="none" stroke="#1F5A2E" stroke-width="3" stroke-dasharray="46 1000" transform="rotate(30 32 32)"></circle>
+          <circle cx="32" cy="32" r="29" fill="none" stroke="#2A1A10" stroke-width="0.8"></circle>
+          <ellipse cx="32" cy="36" rx="11" ry="16" fill="#5A2F12"></ellipse>
+          <ellipse cx="32" cy="25" rx="7" ry="6" fill="#5A2F12"></ellipse>
+          <path d="M28 17 Q22 10 18 8 M36 17 Q42 10 46 8" stroke="#2A1A10" stroke-width="1.6" fill="none" stroke-linecap="round"></path>
+          <rect x="26" y="23" width="12" height="3.5" rx="1" fill="#0a0807"></rect>
+        </svg>
   );
 }
 
 // SVG Strings for dynamic DOM insertion in SwarmSwarm
-const cockroachSvgString = `<svg viewBox="0 0 24 24" fill="none" style="width:100%; height:100%;"><path d="M12 6C11 3 8 2 6 2M12 6C13 3 16 2 18 2" stroke="currentColor" stroke-width="1" stroke-linecap="round" fill="none" /><path d="M9 10C6 9 5 8 4 8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" /><path d="M8.5 13C5.5 13 4.5 13 3.5 13.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" /><path d="M9 16C6 17 5 18.5 4 19.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" /><path d="M15 10C18 9 19 8 20 8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" /><path d="M15.5 13C18.5 13 19.5 13 20.5 13.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" /><path d="M15 16C18 17 19 18.5 20 19.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" /><ellipse cx="12" cy="7" rx="2" ry="1.5" fill="currentColor" /><rect x="9.5" y="8" width="5" height="11" rx="2.5" fill="currentColor" /><line x1="12" y1="8" x2="12" y2="18.5" stroke="var(--background)" stroke-width="0.8" /></svg>`;
+const cockroachSvgString = `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="32" cy="32" r="29" fill="none" stroke="#E0651E" stroke-width="3" stroke-dasharray="46 1000" transform="rotate(-90 32 32)"></circle>
+          <circle cx="32" cy="32" r="29" fill="none" stroke="#1F5A2E" stroke-width="3" stroke-dasharray="46 1000" transform="rotate(30 32 32)"></circle>
+          <circle cx="32" cy="32" r="29" fill="none" stroke="#2A1A10" stroke-width="0.8"></circle>
+          <ellipse cx="32" cy="36" rx="11" ry="16" fill="#5A2F12"></ellipse>
+          <ellipse cx="32" cy="25" rx="7" ry="6" fill="#5A2F12"></ellipse>
+          <path d="M28 17 Q22 10 18 8 M36 17 Q42 10 46 8" stroke="#2A1A10" stroke-width="1.6" fill="none" stroke-linecap="round"></path>
+          <rect x="26" y="23" width="12" height="3.5" rx="1" fill="#0a0807"></rect>
+        </svg>`;
 
 const lightningSvgString = `<svg viewBox="0 0 24 24" fill="currentColor" style="width:100%; height:100%;"><path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" /></svg>`;
 
