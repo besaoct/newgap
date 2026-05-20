@@ -6,6 +6,7 @@
 ---
 
 ## ⚡ The Mission
+
 The Constitution of India is not a relic to be recited and forgotten on Republic Day. It is the founding contract of every Indian with every other Indian. NEWGAP exists because that contract has been repeatedly broken. We did not form this party to rebrand corruption as governance, nor to divide India by faith, caste, or language for votes. We formed it because the gap between what India promised its people and what India has delivered has grown wide enough to swallow entire generations.
 
 ---

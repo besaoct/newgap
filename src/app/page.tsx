@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
@@ -45,9 +46,9 @@ function FormattedText({ text }: { text: string }) {
 
 // Client-side particle animation for the Alliance swarm metaphor
 // Cockroach Vector SVG Component
-function CockroachSvg({ className = "size-8" }: { className?: string }) {
+function CockroachSvg({ className }: { className?: string }) {
   return (
-   <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+   <svg className={className} viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <circle cx="32" cy="32" r="29" fill="none" stroke="#E0651E" strokeWidth="3" strokeDasharray="46 1000" transform="rotate(-90 32 32)"></circle>
           <circle cx="32" cy="32" r="29" fill="none" stroke="#1F5A2E" strokeWidth="3" strokeDasharray="46 1000" transform="rotate(30 32 32)"></circle>
           <circle cx="32" cy="32" r="29" fill="none" stroke="#2A1A10" strokeWidth="0.8"></circle>
@@ -253,7 +254,7 @@ function Hero() {
             </Link>
             <h1 className="text-headline-xl-mobile sm:text-headline-xl font-headline-xl text-on-surface mb-8 uppercase leading-[0.95] tracking-tight"> 
               <span className="text-secondary">NEW</span><span className="text-primary">GAP</span> IS THE ONLY <br/> WAY TO <br />
-              <span className="text-secondary italic">FILL THE GAP.</span>
+              <span className="text-secondary ">FILL THE GAP.</span>
             </h1>
      
             <div className="mb-12">
@@ -290,7 +291,7 @@ function Preamble() {
       <div className={`${MAX} ${PAD}`}>
         <h2 className="text-label-caps font-label-caps text-primary uppercase mb-6 tracking-[0.4em]">The Preamble</h2>
         <h3 className="text-headline-lg-mobile md:text-headline-lg font-headline-lg uppercase leading-tight text-on-surface mb-12 max-w-4xl">
-          The founding <span className="text-secondary italic">contract.</span>
+          The founding <span className="text-secondary ">contract.</span>
         </h3>
         <blockquote className="text-body-lg font-serif  text-on-surface leading-relaxed  border-l-2 border-primary/40 pl-8 mb-12 max-w-5xl">
           {preamble.quote}
@@ -324,7 +325,7 @@ function FiveWordsSection() {
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-px bg-on-surface/10 border border-on-surface/10">
           {preambleWords.map((w) => (
-            <div key={w.numeral} className="group relative p-10 bg-background hover:bg-surface-container-low transition-all duration-500 overflow-hidden reveal-on-scroll min-h-[380px] flex flex-col justify-between">
+            <div key={w.numeral} className="group relative p-10 bg-background hover:bg-surface-container-low transition-all duration-500 overflow-hidden reveal-on-scroll min-h-95 flex flex-col justify-between">
               <div>
                 <div className="flex items-baseline gap-6 mb-6">
                   <span className={`text-headline-md font-headline-md font-extrabold ${w.colorScheme === "orange" ? "text-primary" : "text-secondary"}`}>{w.numeral}</span>
@@ -392,7 +393,7 @@ function WhatWeStandFor() {
       <div className={`${MAX} ${PAD}`}>
         <h2 className="text-label-caps font-label-caps text-primary uppercase mb-6 tracking-[0.4em]">What We Stand For</h2>
         <h3 className="text-headline-lg-mobile md:text-headline-lg font-headline-lg uppercase leading-tight text-on-surface mb-16 max-w-4xl font-extrabold">
-          Ten <span className="text-secondary italic">non-negotiables.</span>
+          Ten <span className="text-secondary ">non-negotiables.</span>
         </h3>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-px bg-on-surface/10 border border-on-surface/10">
           {whatWeStandFor.map((s, i) => (
@@ -425,7 +426,7 @@ function Leadership() {
       <div className={`${MAX} ${PAD}`}>
         <h2 className="text-label-caps font-label-caps text-secondary uppercase mb-6 tracking-[0.4em]">Leadership Criteria</h2>
         <h3 className="text-headline-lg-mobile md:text-headline-lg font-headline-lg uppercase leading-tight text-on-surface mb-16 max-w-4xl font-extrabold">
-          Governance is a <span className="text-primary italic">profession.</span>
+          Governance is a <span className="text-primary ">profession.</span>
         </h3>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {leadershipCriteria.map((l) => (
@@ -480,7 +481,7 @@ function ConstitutionalValues() {
       <div className={`${MAX} ${PAD}`}>
         <h2 className="text-label-caps font-label-caps text-secondary uppercase mb-6 tracking-[0.4em]">Constitutional Values</h2>
         <h3 className="text-headline-lg-mobile md:text-headline-lg font-headline-lg uppercase leading-tight text-on-surface mb-16 max-w-4xl font-extrabold">
-          The full <span className="text-primary italic">vocabulary.</span>
+          The full <span className="text-primary ">vocabulary.</span>
         </h3>
         <div className="flex flex-wrap gap-3">
           {constitutionalValues.map((v) => (
@@ -534,6 +535,7 @@ function Join({ onJoinClick }: { onJoinClick: () => void }) {
               <p className="text-body-md text-on-surface-variant  leading-relaxed font-light">{whoCanJoin.membership}</p>
             </div>
             <div className="flex justify-center items-center my-6">
+  
               <img src="/logo-transparent.png" alt="NEWGAP Logo" className="h-64 w-auto object-contain" />
             </div>
             <button onClick={onJoinClick} className="btn-retro-primary w-full py-5 text-sm font-bold">
@@ -659,7 +661,9 @@ function Index() {
         <FinalWord />
       </main>
       <Footer />
-      <MembershipModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      {isModalOpen && (
+        <MembershipModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      )}
     </div>
   );
 }
@@ -677,13 +681,6 @@ function MembershipModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => 
   const [submitError, setSubmitError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!isOpen) {
-      setStep("form");
-      setSubmitError("");
-    }
-  }, [isOpen]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -1118,7 +1115,8 @@ const handlePrint = async () => {
                       {partyInfo.preamble.founding.toUpperCase()}
                     </p>
                   </div>
-                  <img src="/logo-transparent.png" crossOrigin="anonymous" alt="Logo" className="w-[36px] sm:w-[48px] h-[36px] sm:h-[48px] object-contain -mt-1.5" />
+                  
+                  <img src="/logo-transparent.png" crossOrigin="anonymous" alt="Logo" className="w-9 sm:w-12 h-9 sm:h-12 object-contain -mt-1.5" />
                 </div>
 
                 <div className="h-px bg-[#1a1a1a]/20 mb-3" /> 
