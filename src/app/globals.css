@@ -47,8 +47,8 @@
   --font-label-caps: var(--font-sora), sans-serif;
   --font-mono-label: var(--font-sora), sans-serif;
 
-  --text-headline-xl: clamp(3.5rem, 7.5vw, 6.5rem);
-  --text-headline-lg: clamp(2.25rem, 5vw, 5rem);
+  --text-headline-xl: clamp(3.5rem, 7vw, 6.25rem);
+  --text-headline-lg: clamp(3.5rem, 5vw, 3.5rem);
   --text-headline-lg-mobile: 3rem;
   --text-headline-xl-mobile: 3.5rem;
   --text-headline-md: 1.75rem;
