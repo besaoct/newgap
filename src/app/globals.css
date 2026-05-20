@@ -48,8 +48,8 @@
   --font-mono-label: var(--font-sora), sans-serif;
 
   --text-headline-xl: clamp(3.5rem, 7vw, 6.25rem);
-  --text-headline-lg: clamp(3.5rem, 5vw, 3.5rem);
-  --text-headline-lg-mobile: 3rem;
+  --text-headline-lg: clamp(3.75rem, 5vw, 3.75rem);
+  --text-headline-lg-mobile: 2.25rem;
   --text-headline-xl-mobile: 3.5rem;
   --text-headline-md: 1.75rem;
   --text-body-lg: 1.25rem;

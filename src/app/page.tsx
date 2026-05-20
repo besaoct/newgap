@@ -47,12 +47,12 @@ function FormattedText({ text }: { text: string }) {
 function CockroachSvg({ className = "size-8" }: { className?: string }) {
   return (
    <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <circle cx="32" cy="32" r="29" fill="none" stroke="#E0651E" stroke-width="3" stroke-dasharray="46 1000" transform="rotate(-90 32 32)"></circle>
-          <circle cx="32" cy="32" r="29" fill="none" stroke="#1F5A2E" stroke-width="3" stroke-dasharray="46 1000" transform="rotate(30 32 32)"></circle>
-          <circle cx="32" cy="32" r="29" fill="none" stroke="#2A1A10" stroke-width="0.8"></circle>
+          <circle cx="32" cy="32" r="29" fill="none" stroke="#E0651E" strokeWidth="3" strokeDasharray="46 1000" transform="rotate(-90 32 32)"></circle>
+          <circle cx="32" cy="32" r="29" fill="none" stroke="#1F5A2E" strokeWidth="3" strokeDasharray="46 1000" transform="rotate(30 32 32)"></circle>
+          <circle cx="32" cy="32" r="29" fill="none" stroke="#2A1A10" strokeWidth="0.8"></circle>
           <ellipse cx="32" cy="36" rx="11" ry="16" fill="#5A2F12"></ellipse>
           <ellipse cx="32" cy="25" rx="7" ry="6" fill="#5A2F12"></ellipse>
-          <path d="M28 17 Q22 10 18 8 M36 17 Q42 10 46 8" stroke="#2A1A10" stroke-width="1.6" fill="none" stroke-linecap="round"></path>
+          <path d="M28 17 Q22 10 18 8 M36 17 Q42 10 46 8" stroke="#2A1A10" strokeWidth="1.6" fill="none" strokeLinecap="round"></path>
           <rect x="26" y="23" width="12" height="3.5" rx="1" fill="#0a0807"></rect>
         </svg>
   );
@@ -60,20 +60,20 @@ function CockroachSvg({ className = "size-8" }: { className?: string }) {
 
 // SVG Strings for dynamic DOM insertion in SwarmSwarm
 const cockroachSvgString = `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <circle cx="32" cy="32" r="29" fill="none" stroke="#E0651E" stroke-width="3" stroke-dasharray="46 1000" transform="rotate(-90 32 32)"></circle>
-          <circle cx="32" cy="32" r="29" fill="none" stroke="#1F5A2E" stroke-width="3" stroke-dasharray="46 1000" transform="rotate(30 32 32)"></circle>
-          <circle cx="32" cy="32" r="29" fill="none" stroke="#2A1A10" stroke-width="0.8"></circle>
+          <circle cx="32" cy="32" r="29" fill="none" stroke="#E0651E" strokeWidth="3" strokeDasharray="46 1000" transform="rotate(-90 32 32)"></circle>
+          <circle cx="32" cy="32" r="29" fill="none" stroke="#1F5A2E" strokeWidth="3" strokeDasharray="46 1000" transform="rotate(30 32 32)"></circle>
+          <circle cx="32" cy="32" r="29" fill="none" stroke="#2A1A10" strokeWidth="0.8"></circle>
           <ellipse cx="32" cy="36" rx="11" ry="16" fill="#5A2F12"></ellipse>
           <ellipse cx="32" cy="25" rx="7" ry="6" fill="#5A2F12"></ellipse>
-          <path d="M28 17 Q22 10 18 8 M36 17 Q42 10 46 8" stroke="#2A1A10" stroke-width="1.6" fill="none" stroke-linecap="round"></path>
+          <path d="M28 17 Q22 10 18 8 M36 17 Q42 10 46 8" stroke="#2A1A10" strokeWidth="1.6" fill="none" strokeLinecap="round"></path>
           <rect x="26" y="23" width="12" height="3.5" rx="1" fill="#0a0807"></rect>
         </svg>`;
 
 const lightningSvgString = `<svg viewBox="0 0 24 24" fill="currentColor" style="width:100%; height:100%;"><path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" /></svg>`;
 
-const sunburstSvgString = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:100%; height:100%;"><circle cx="12" cy="12" r="3" fill="currentColor" /><path d="M12 2v4M12 18v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M2 12h4M18 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83" stroke-linecap="round" /></svg>`;
+const sunburstSvgString = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style="width:100%; height:100%;"><circle cx="12" cy="12" r="3" fill="currentColor" /><path d="M12 2v4M12 18v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M2 12h4M18 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83" stroke-linecap="round" /></svg>`;
 
-const hexagonSvgString = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:100%; height:100%;"><path d="M12 2l8.66 5v10L12 22l-8.66-5V7z" /></svg>`;
+const hexagonSvgString = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style="width:100%; height:100%;"><path d="M12 2l8.66 5v10L12 22l-8.66-5V7z" /></svg>`;
 
 // Client-side particle animation for the Alliance swarm metaphor
 const SwarmSwarm = () => {
@@ -247,7 +247,7 @@ function Hero() {
             </h1>
             <p className="text-body-md font-mono-label uppercase tracking-[0.3em] text-on-surface-variant mb-10 font-bold"><FormattedText text={partyInfo.fullName} /></p>
             <div className="mb-16">
-              <blockquote className="text-body-lg font-body-lg text-on-surface-variant leading-relaxed italic border-l-2 border-primary/30 pl-8 text-left ">
+              <blockquote className="text-body-lg font-body-lg text-on-surface-variant leading-relaxed  border-l-2 border-primary/30 pl-8 text-left ">
                 <FormattedText text={partyInfo.preamble.subtitle} />
               </blockquote>
             </div>
@@ -279,10 +279,10 @@ function Preamble() {
     <section id="preamble" className={`py-32 bg-surface-container-lowest border-y border-on-surface/10 scroll-mt-16`}>
       <div className={`${MAX} ${PAD}`}>
         <h2 className="text-label-caps font-label-caps text-primary uppercase mb-6 tracking-[0.4em]">The Preamble</h2>
-        <h3 className="text-headline-lg font-headline-lg uppercase leading-tight text-on-surface mb-12 max-w-4xl">
+        <h3 className="text-headline-lg-mobile md:text-headline-lg font-headline-lg uppercase leading-tight text-on-surface mb-12 max-w-4xl">
           The founding <span className="text-secondary italic">contract.</span>
         </h3>
-        <blockquote className="text-body-lg font-body-lg text-on-surface leading-relaxed italic border-l-2 border-primary/40 pl-8 mb-12 max-w-5xl">
+        <blockquote className="text-body-lg font-body-lg text-on-surface leading-relaxed  border-l-2 border-primary/40 pl-8 mb-12 max-w-5xl">
           {preamble.quote}
         </blockquote>
         <div className="grid lg:grid-cols-2 gap-12">
@@ -306,7 +306,7 @@ function FiveWordsSection() {
         <div className="mb-20 flex flex-col lg:flex-row lg:items-end justify-between gap-8">
           <div className="max-w-2xl">
             <h2 className="text-label-caps font-label-caps text-primary uppercase mb-6 tracking-[0.4em]">The Preamble Foundation</h2>
-            <p className="text-headline-lg font-headline-lg uppercase leading-tight text-on-surface">
+            <p className="text-headline-lg-mobile md:text-headline-lg font-headline-lg uppercase leading-tight text-on-surface">
               Six words that <span className="text-secondary">redefine</span> our existence.
             </p>
           </div>
@@ -340,7 +340,7 @@ function Pillars() {
         <div className="flex flex-col lg:flex-row justify-between items-end mb-20 gap-8">
           <div className="reveal-on-scroll">
             <h2 className="text-label-caps font-label-caps text-secondary uppercase mb-6 tracking-[0.4em]">Core Pillars</h2>
-            <h3 className="text-headline-lg font-headline-lg uppercase max-w-xl text-on-surface font-extrabold">
+            <h3 className="text-headline-lg-mobile md:text-headline-lg font-headline-lg uppercase max-w-xl text-on-surface font-extrabold">
               A blueprint for the <span className="text-primary">next era.</span>
             </h3>
           </div>
@@ -381,7 +381,7 @@ function WhatWeStandFor() {
     <section id="stand" className={`py-32 scroll-mt-16`}>
       <div className={`${MAX} ${PAD}`}>
         <h2 className="text-label-caps font-label-caps text-primary uppercase mb-6 tracking-[0.4em]">What We Stand For</h2>
-        <h3 className="text-headline-lg font-headline-lg uppercase leading-tight text-on-surface mb-16 max-w-4xl font-extrabold">
+        <h3 className="text-headline-lg-mobile md:text-headline-lg font-headline-lg uppercase leading-tight text-on-surface mb-16 max-w-4xl font-extrabold">
           Ten <span className="text-secondary italic">non-negotiables.</span>
         </h3>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-px bg-on-surface/10 border border-on-surface/10">
@@ -414,7 +414,7 @@ function Leadership() {
     <section className={`py-32 bg-surface-container-lowest border-y border-on-surface/10`}>
       <div className={`${MAX} ${PAD}`}>
         <h2 className="text-label-caps font-label-caps text-secondary uppercase mb-6 tracking-[0.4em]">Leadership Criteria</h2>
-        <h3 className="text-headline-lg font-headline-lg uppercase leading-tight text-on-surface mb-16 max-w-4xl font-extrabold">
+        <h3 className="text-headline-lg-mobile md:text-headline-lg font-headline-lg uppercase leading-tight text-on-surface mb-16 max-w-4xl font-extrabold">
           Governance is a <span className="text-primary italic">profession.</span>
         </h3>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -444,7 +444,7 @@ function SharedValues() {
     <section className={`py-32`}>
       <div className={`${MAX} ${PAD}`}>
         <h2 className="text-label-caps font-label-caps text-primary uppercase mb-6 tracking-[0.4em]">Shared Demands</h2>
-        <h3 className="text-headline-lg font-headline-lg uppercase leading-tight text-on-surface mb-16 max-w-4xl font-extrabold">
+        <h3 className="text-headline-lg-mobile md:text-headline-lg font-headline-lg uppercase leading-tight text-on-surface mb-16 max-w-4xl font-extrabold">
           {sharedValues.title}
         </h3>
         <div className="space-y-px bg-on-surface/10 border border-on-surface/10">
@@ -469,7 +469,7 @@ function ConstitutionalValues() {
     <section className={`py-32 bg-surface-container-lowest border-y border-on-surface/10`}>
       <div className={`${MAX} ${PAD}`}>
         <h2 className="text-label-caps font-label-caps text-secondary uppercase mb-6 tracking-[0.4em]">Constitutional Values</h2>
-        <h3 className="text-headline-lg font-headline-lg uppercase leading-tight text-on-surface mb-16 max-w-4xl font-extrabold">
+        <h3 className="text-headline-lg-mobile md:text-headline-lg font-headline-lg uppercase leading-tight text-on-surface mb-16 max-w-4xl font-extrabold">
           The full <span className="text-primary italic">vocabulary.</span>
         </h3>
         <div className="flex flex-wrap gap-3">
@@ -493,7 +493,7 @@ function GapBanner() {
           return (
             <p
               key={line}
-              className={`mb-8 ${isHighlight ? "text-headline-lg font-headline-lg uppercase font-extrabold" : "text-body-lg text-on-surface-variant font-light"} leading-tight`}
+              className={`mb-8 ${isHighlight ? "text-headline-lg-mobile md:text-headline-lg font-headline-lg uppercase font-extrabold" : "text-body-lg text-on-surface-variant font-light"} leading-tight`}
             >
               <FormattedText text={line} />
             </p>
@@ -511,9 +511,9 @@ function Join({ onJoinClick }: { onJoinClick: () => void }) {
         <div className="reveal-on-scroll flex flex-col justify-between">
           <div>
             <h2 className="text-label-caps font-label-caps text-primary uppercase mb-6 tracking-[0.4em]">Membership Protocol</h2>
-            <h3 className="text-headline-lg font-headline-lg uppercase mb-10 leading-tight text-on-surface font-extrabold"><FormattedText text={whoCanJoin.title} /></h3>
+            <h3 className="text-headline-lg-mobile md:text-headline-lg font-headline-lg uppercase mb-10 leading-tight text-on-surface font-extrabold"><FormattedText text={whoCanJoin.title} /></h3>
             <p className="text-body-lg text-on-surface-variant mb-6 leading-relaxed font-light">{whoCanJoin.body}</p>
-            <p className="text-body-md text-on-surface mb-6 leading-relaxed italic font-light">{whoCanJoin.criteria}</p>
+            <p className="text-body-md text-on-surface mb-6 leading-relaxed  font-light">{whoCanJoin.criteria}</p>
           </div>
         </div>
         <div className="reveal-on-scroll">
@@ -551,13 +551,13 @@ function Alliance() {
                 {allianceSection.status}
               </div>
             </div>
-            <h2 className="text-headline-lg font-headline-xl uppercase mb-4 leading-none text-on-surface font-extrabold tracking-tighter">
+            <h2 className="text-headline-lg-mobile md:text-headline-lg font-headline-xl uppercase mb-4 leading-none text-on-surface font-extrabold tracking-tighter">
           <span className="text-primary ">Cockroach</span> Janta Party
             </h2>
             <p className="text-mono-label text-on-surface-variant uppercase tracking-widest mb-10 font-bold font-mono-label">{allianceSection.sub}</p>
             <div className="space-y-4 mb-8">
               {allianceSection.quotes.map((q) => (
-                <p key={q} className="text-body-lg text-on-surface italic  border-l-2 border-primary/30 pl-6">{q}</p>
+                <p key={q} className="text-body-lg text-on-surface   border-l-2 border-primary/30 pl-6">{q}</p>
               ))}
             </div>
             <p className="text-body-md text-on-surface-variant mb-6 leading-relaxed font-light"><FormattedText text={allianceSection.preamble} /></p>
@@ -600,13 +600,13 @@ function FinalWord() {
       <div className={`${MAX} ${PAD}`}>
         <h2 className="text-label-caps font-label-caps text-outline uppercase mb-16 tracking-[1em] font-extrabold">The Commitment</h2>
         {finalWord.lines.map((line) => (
-          <p key={line} className="text-headline-lg lg:text-headline-xl font-headline-xl uppercase mb-10 leading-none text-on-surface font-extrabold tracking-tight">
+          <p key={line} className="text-headline-lg-mobile md:text-headline-lg font-headline-xl uppercase mb-10 leading-none text-on-surface font-extrabold tracking-wider">
             <FormattedText text={line} />
           </p>
         ))}
         <div className="flex justify-center items-center gap-8 mt-16">
           <div className="h-px w-24 bg-primary/30" />
-          <span className="text-headline-lg font-headline-lg font-black text-secondary uppercase tracking-widest">{finalWord.closing}</span>
+          <span className="text-headline-lg-mobile md:text-headline-lg font-headline-lg font-black text-secondary uppercase tracking-widest">{finalWord.closing}</span>
           <div className="h-px w-24 bg-primary/30" />
         </div>
       </div>
