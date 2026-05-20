@@ -211,7 +211,7 @@ function Nav({ onJoinClick }: { onJoinClick: () => void }) {
             </div>
           <p className="font-thin text-[7px] text-on-surface uppercase">New Generation Action Party</p>
        
-            <span className="font-mono-label text-[8px] tracking-[0.15em] text-primary uppercase font-thin">
+            <span className="font-mono-label text-[8px]  text-primary uppercase font-thin">
                INDIA · EST. 2026
             </span>
           </div>
