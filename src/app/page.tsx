@@ -961,10 +961,10 @@ const handlePrint = async () => {
       >
         <button 
           onClick={onClose}
-          className="absolute top-4 right-4 bg-[#f6f5f0] border-2 border-[#1a1a1a] hover:bg-[#d46b4e]/20 p-2 font-black transition-all flex items-center justify-center text-xs aspect-square select-none leading-none z-10"
+          className="absolute top-4 right-4 bg-[#f6f5f0] border-2 border-[#1a1a1a] hover:bg-[#d46b4e]/20  font-black transition-all flex items-center justify-center aspect-square select-none w-5 h-5 leading-none z-10"
           style={{ boxShadow: '2px 2px 0px #000' }}
         >
-          <X/>
+          <X className="size-4"/>
         </button>
 
         {step === "form" ? (
