@@ -2,7 +2,6 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import html2canvas from "html2canvas";
 import { logoSvgPaths } from "@/lib/logo-svg-paths";
 import { useRevealOnScroll } from "@/hooks/use-reveal-on-scroll";
 import {
@@ -19,7 +18,7 @@ import {
   allianceSection,
   finalWord,
   ctas,
-} from "@/lib/party-data";
+} from "@/data/content";
 
 const MAX = "max-w-7xl mx-auto w-full";
 const PAD = "px-container-padding-mobile md:px-container-padding-desktop";
