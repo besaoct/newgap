@@ -313,7 +313,7 @@ function FiveWordsSection() {
           </div>
           <div className="text-stroke text-8xl font-black hidden lg:block select-none font-mono-label">06 WORDS</div>
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-2 lg:grid-cols-2 gap-px bg-on-surface/10 border border-on-surface/10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-px bg-on-surface/10 border border-on-surface/10">
           {preambleWords.map((w) => (
             <div key={w.numeral} className="group relative p-10 bg-background hover:bg-surface-container-low transition-all duration-500 overflow-hidden reveal-on-scroll min-h-[380px] flex flex-col justify-between">
               <div>
@@ -363,7 +363,7 @@ function Pillars() {
             </div>
           ))}
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {rest.map((t) => (
             <div key={t.title} className="brutalist-border p-6 bg-background card-hover reveal-on-scroll">
               <span className="material-symbols-outlined text-on-surface mb-4 block" style={{ fontSize: "1.75rem" }}>{t.icon}</span>

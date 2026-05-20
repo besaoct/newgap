@@ -227,12 +227,12 @@ export const leadershipCriteria = [
     ]
   },
   {
-    role: "Prime Minister",
+    role: "Education Minister",
     requirements: [
-      "PhD in any field",
-      "Secular & socialist by principle",
-      "Passes independent merit review",
-      "Constitutional adherence"
+      "PhD holder",
+      "10+ years active teaching",
+      "Published research papers",
+      "Has lived inside education, not just governed it"
     ]
   },
   {
@@ -245,12 +245,12 @@ export const leadershipCriteria = [
     ]
   },
   {
-    role: "Education Minister",
+    role: "Prime Minister",
     requirements: [
-      "PhD holder",
-      "10+ years active teaching",
-      "Published research papers",
-      "Has lived inside education, not just governed it"
+      "PhD in any field",
+      "Secular & socialist by principle",
+      "Passes independent merit review",
+      "Constitutional adherence"
     ]
   }
 ];
