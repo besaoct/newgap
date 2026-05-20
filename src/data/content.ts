@@ -9,7 +9,7 @@ export const partyInfo = {
     "NEWGAP is the only way to fill the gap."
   ],
   preamble: {
-    subtitle: "The Constitution is not a suggestion. It is a promise.",
+    subtitle: "The Constitution is not a suggestion. It is a promise. A founding contract of every Indian with every other Indian. We are here to enforce it.",
     founding: "India · EST. 2026",
     jaiHind: "Jai Hind."
   }

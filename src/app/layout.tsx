@@ -117,7 +117,7 @@ export default function RootLayout({
         <link rel="icon" href="/logo.png" type="image/png" />
          <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
       </head>
-      <body className="antialiased selection:bg-(--color-brand-orange) selection:text-(--color-brand-light)"  cz-shortcut-listen="true">
+      <body className="antialiased selection:bg-(--color-brand-orange) selection:text-(--color-brand-light) "  cz-shortcut-listen="true">
           {children}
       </body>
     </html>

@@ -201,17 +201,16 @@ function Nav({ onJoinClick }: { onJoinClick: () => void }) {
           src="/logo-transparent.png" alt="NEWGAP Logo" className="size-24 object-contain" />
        
           <div className="flex flex-col mt-4  justify-center items-start">
-            <div className="flex gap-0 text-headline-md leading-[0.85] tracking-tighter uppercase font-headline-xl text-on-surface">
-               <span className=" leading-[0.85] text-secondary tracking-tighter ">
-              NEW
+            <div className="flex gap-0 text-headline-md leading-[0.85]  uppercase font-headline-xl text-on-surface"> <span className=" leading-[0.85] text-secondary">NEW
             </span>
-            <span className=" text-primary leading-[0.85] tracking-tighter">
+            <span className=" text-primary leading-[0.85]">
               GAP
             </span>
             </div>
-          <p className="font-thin text-[7px] text-on-surface uppercase">New Generation Action Party</p>
+          <p className="font-semibold tracking-wider leading-2.5 text-[7px] text-secondary uppercase">New <span className="text-primary">
+            Generation Action Party</span></p>
        
-            <span className="font-mono-label text-[8px]  text-primary uppercase font-thin">
+            <span className="mt-0.5 text-[8px] tracking-wider font-mono  text-primary uppercase font-thin">
                INDIA · EST. 2026
             </span>
           </div>
