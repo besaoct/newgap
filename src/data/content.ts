@@ -19,7 +19,7 @@ export const preamble = {
   quote: "WE, THE PEOPLE OF INDIA, having solemnly resolved to constitute India into a SOVEREIGN SOCIALIST SECULAR DEMOCRATIC REPUBLIC and to secure to all its citizens — JUSTICE, social, economic and political; LIBERTY of thought, expression, belief, faith and worship; EQUALITY of status and of opportunity; and to promote among them all FRATERNITY assuring the dignity of the individual and the unity and integrity of the Nation — in our Constituent Assembly this twenty-sixth day of November, 1949, do HEREBY ADOPT, ENACT AND GIVE TO OURSELVES THIS CONSTITUTION.",
   body: "This is not a relic. This is not a preamble to be recited and forgotten on Republic Day. This is the founding contract of every Indian with every other Indian. NEWGAP — the New Generation Action Party — exists because that contract has been repeatedly broken. We are here to enforce it.",
   closing: "We did not form this party to rebrand corruption as governance. We did not form it to divide India by faith, caste, or language for votes. We formed it because the gap between what India promised its people and what India has delivered to its people has grown wide enough to swallow entire generations.",
-  highlights: ["SOVEREIGN SOCIALIST SECULAR DEMOCRATIC REPUBLIC", "JUSTICE", "LIBERTY", "EQUALITY", "FRATERNITY"]
+  highlights: ["SOVEREIGN SOCIALIST SECULAR DEMOCRATIC REPUBLIC JUSTICE",  "LIBERTY", "EQUALITY", "FRATERNITY"] 
 };
 
 export const preambleWords = [
