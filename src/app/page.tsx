@@ -695,81 +695,29 @@ function MembershipModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => 
     setIsSubmitting(true);
     setSubmitError("");
 
-    let existingEmails: string[] = [];
-    let existingUniqueIds: string[] = [];
-
     try {
-      // Fetch existing records for validation via server proxy
-      const checkRes = await fetch("/api/check-records");
-      if (checkRes.ok) {
-        const data = await checkRes.json();
-        existingEmails = data.emails || [];
-        existingUniqueIds = data.uniqueIds || [];
-      } else {
-        console.warn("Could not retrieve existing records for validation.");
-      }
-    } catch (err) {
-      console.error("Error calling validation API:", err);
-    }
-
-    // Email validation
-    const userEmail = formData.email.trim().toLowerCase();
-    if (existingEmails.includes(userEmail)) {
-      setSubmitError("Email is already registered. You cannot apply again.");
-      setIsSubmitting(false);
-      return;
-    }
-
-    // Generate unique ID 
-    const name   = formData.name;
-    const dob    = formData.dob;               // "DDMMYY" or "YYYY-MM-DD"
-    const consonantPart = getConsonants(name);         // e.g. "JHN"
-    const hexYear       = getDobYearHex(dob);         // "7D1"
-    const username      = `${consonantPart}${hexYear}`;  // e.g. "JHN7D1"
-    
-    // Ensure the ID is unique
-    let generatedId = "";
-    let attempts = 0;
-    const baseSuffix = getTimestampSuffix();
-    do {
-      const suffix = attempts === 0 ? baseSuffix : `${baseSuffix}-${attempts}`;
-      generatedId = `NG-${username}${suffix}`;
-      attempts++;
-    } while (existingUniqueIds.includes(generatedId));
-
-    setUniqueId(generatedId);
-
-    // Set issue date
-    const now = new Date();
-    const yyyy = now.getFullYear();
-    const mm = String(now.getMonth() + 1).padStart(2, '0');
-    const dd = String(now.getDate()).padStart(2, '0');
-    const formattedIssueDate = `${yyyy}-${mm}-${dd}`;
-    setIssueDate(formattedIssueDate);
-
-    // Prepare Google Form payload
-    const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSdQ7atU9fN5sBD7XK-W11N0S9IkuYOi8UwoErmQogS3wUbViQ/formResponse";
-    const body = new URLSearchParams();
-    body.append("entry.823728578", formData.name);
-    body.append("entry.2085405292", formData.phone);
-    body.append("entry.1936223053", formData.dob);
-    body.append("entry.1266060645", formData.email);
-    body.append("entry.405717969", generatedId);
-
-    try {
-      // Use no-cors mode to bypass CORS policies.
-      await fetch(formUrl, {
+      const res = await fetch("/api/check-records", {
         method: "POST",
-        mode: "no-cors",
         headers: {
-          "Content-Type": "application/x-www-form-urlencoded"
+          "Content-Type": "application/json",
         },
-        body: body.toString()
+        body: JSON.stringify(formData),
       });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setSubmitError(data.error || "An error occurred during registration.");
+        setIsSubmitting(false);
+        return;
+      }
+
+      setUniqueId(data.uniqueId);
+      setIssueDate(data.issueDate);
       setIsSubmitting(false);
       setStep("continue");
     } catch (err) {
-      console.error("Google Form submission error: ", err);
+      console.error("Submission error: ", err);
       setSubmitError("Failed to submit form. Please check your connection and try again.");
       setIsSubmitting(false);
     }

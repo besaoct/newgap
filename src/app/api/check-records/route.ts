@@ -1,58 +1,166 @@
 import { NextResponse } from "next/server";
+import { getGoogleAuthToken, readSheetData, appendRowToSheet } from "@/lib/google-sheets";
 
 export const dynamic = "force-dynamic";
 
+const GOOGLE_SERVICE_ACCOUNT_EMAIL = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
+const GOOGLE_PRIVATE_KEY = process.env.GOOGLE_PRIVATE_KEY;
+const GOOGLE_SHEET_ID = process.env.GOOGLE_SHEET_ID;
+const GOOGLE_SHEET_RANGE = process.env.GOOGLE_SHEET_RANGE || "Sheet1!A:F";
+
+// Helper: check if sheets API credentials are fully configured
+function checkConfig() {
+  if (!GOOGLE_SERVICE_ACCOUNT_EMAIL || !GOOGLE_PRIVATE_KEY || !GOOGLE_SHEET_ID) {
+    throw new Error(
+      "Google Sheets API configuration is incomplete. Please set GOOGLE_SERVICE_ACCOUNT_EMAIL, GOOGLE_PRIVATE_KEY, and GOOGLE_SHEET_ID in your environment variables."
+    );
+  }
+}
+
+// Helper: extract first 3 consonants from a name
+function getConsonants(name: string): string {
+  const consonants = name
+    .toLowerCase()
+    .replace(/[^a-z]/g, "")
+    .split("")
+    .filter((c) => !"aeiou".includes(c));
+  return consonants.slice(0, 3).join("").toUpperCase();
+}
+
+// Helper: convert DOB year to hex, supporting both YYYY-MM-DD and DDMMYY formats
+function getDobYearHex(dob: string): string {
+  let year = 2000;
+  if (dob.includes("-")) {
+    // Format: YYYY-MM-DD
+    year = parseInt(dob.split("-")[0], 10) || 2000;
+  } else if (dob.length >= 6) {
+    // Format: DDMMYY
+    year = 2000 + (parseInt(dob.slice(4, 6), 10) || 0);
+  }
+  return year.toString(16).toUpperCase();
+}
+
+// Helper: build YYYYDDHHmmss suffix from current time
+function getTimestampSuffix(): string {
+  const now = new Date();
+  const yyyy = now.getFullYear();
+  const dd = String(now.getDate()).padStart(2, "0");
+  const HH = String(now.getHours()).padStart(2, "0");
+  const mm = String(now.getMinutes()).padStart(2, "0");
+  const ss = String(now.getSeconds()).padStart(2, "0");
+  return `${yyyy}${dd}${HH}${mm}${ss}`;
+}
+
 export async function GET() {
   try {
-    const sheetUrl = "https://docs.google.com/spreadsheets/d/19lmrbaFMcFhpL3kRrpAY0Oti8GCN0nUWKMq7j3OwBX8/export?format=csv";
-    const res = await fetch(sheetUrl, {
-      next: { revalidate: 0 },
-      cache: "no-store"
-    });
-    
-    if (!res.ok) {
-      throw new Error(`Failed to fetch sheet: ${res.statusText}`);
-    }
+    checkConfig();
 
-    const csvText = await res.text();
-    
-    // Parse CSV
+    const token = await getGoogleAuthToken(GOOGLE_SERVICE_ACCOUNT_EMAIL!, GOOGLE_PRIVATE_KEY!);
+    const rows = await readSheetData(token, GOOGLE_SHEET_ID!, GOOGLE_SHEET_RANGE);
+
     const emails: string[] = [];
     const uniqueIds: string[] = [];
-    
-    const rows = csvText.split(/\r?\n/);
+
     // Row 0 is header: Timestamp,Name,Email,Phone,DOB,Unique ID
     for (let i = 1; i < rows.length; i++) {
-      const row = rows[i].trim();
-      if (!row) continue;
-      
-      const cols: string[] = [];
-      let insideQuote = false;
-      let col = "";
-      for (let j = 0; j < row.length; j++) {
-        const char = row[j];
-        if (char === '"') {
-          insideQuote = !insideQuote;
-        } else if (char === ',' && !insideQuote) {
-          cols.push(col.trim().replace(/^"|"$/g, ""));
-          col = "";
-        } else {
-          col += char;
-        }
-      }
-      cols.push(col.trim().replace(/^"|"$/g, ""));
-      
-      if (cols.length >= 6) {
-        const email = cols[2]?.trim().toLowerCase();
-        const uniqueId = cols[5]?.trim();
-        if (email) emails.push(email);
-        if (uniqueId) uniqueIds.push(uniqueId);
-      }
+      const row = rows[i];
+      if (!row || row.length === 0) continue;
+
+      const email = row[2]?.trim().toLowerCase();
+      const uniqueId = row[5]?.trim();
+
+      if (email) emails.push(email);
+      if (uniqueId) uniqueIds.push(uniqueId);
     }
-    
+
     return NextResponse.json({ emails, uniqueIds });
   } catch (error: any) {
     console.error("Error checking records:", error);
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}
+
+export async function POST(req: Request) {
+  try {
+    checkConfig();
+
+    const { name, phone, dob, email } = await req.json();
+
+    if (!name || !phone || !dob || !email) {
+      return NextResponse.json({ error: "Missing required fields." }, { status: 400 });
+    }
+
+    const token = await getGoogleAuthToken(GOOGLE_SERVICE_ACCOUNT_EMAIL!, GOOGLE_PRIVATE_KEY!);
+    const rows = await readSheetData(token, GOOGLE_SHEET_ID!, GOOGLE_SHEET_RANGE);
+
+    const emails: string[] = [];
+    const uniqueIds: string[] = [];
+
+    // Extract existing records for duplicate check
+    for (let i = 1; i < rows.length; i++) {
+      const row = rows[i];
+      if (!row || row.length === 0) continue;
+
+      const existingEmail = row[2]?.trim().toLowerCase();
+      const existingId = row[5]?.trim();
+
+      if (existingEmail) emails.push(existingEmail);
+      if (existingId) uniqueIds.push(existingId);
+    }
+
+    // Email verification check
+    const userEmail = email.trim().toLowerCase();
+    if (emails.includes(userEmail)) {
+      return NextResponse.json(
+        { error: "Email is already registered. You cannot apply again." },
+        { status: 400 }
+      );
+    }
+
+    // Server-side unique ID generation
+    const consonantPart = getConsonants(name);
+    const hexYear = getDobYearHex(dob);
+    const username = `${consonantPart}${hexYear}`;
+
+    let generatedId = "";
+    let attempts = 0;
+    const baseSuffix = getTimestampSuffix();
+    do {
+      const suffix = attempts === 0 ? baseSuffix : `${baseSuffix}-${attempts}`;
+      generatedId = `NG-${username}${suffix}`;
+      attempts++;
+    } while (uniqueIds.includes(generatedId));
+
+    // Format current local issue date
+    const now = new Date();
+    const yyyy = now.getFullYear();
+    const mm = String(now.getMonth() + 1).padStart(2, "0");
+    const dd = String(now.getDate()).padStart(2, "0");
+    const formattedIssueDate = `${yyyy}-${mm}-${dd}`;
+
+    // Get current timestamp for the first column
+    const timestampStr = now.toLocaleString();
+
+    // Row order: Timestamp, Name, Email, Phone, DOB, Unique ID
+    const newRow = [
+      timestampStr,
+      name.trim(),
+      userEmail,
+      phone.trim(),
+      dob.trim(),
+      generatedId,
+    ];
+
+    // Append to sheet
+    await appendRowToSheet(token, GOOGLE_SHEET_ID!, GOOGLE_SHEET_RANGE, newRow);
+
+    return NextResponse.json({
+      success: true,
+      uniqueId: generatedId,
+      issueDate: formattedIssueDate,
+    });
+  } catch (error: any) {
+    console.error("Error submitting record:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
