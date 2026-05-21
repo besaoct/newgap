@@ -117,3 +117,224 @@ export async function appendRowToSheet(
     throw new Error(`Failed to append row to sheet: ${res.status} ${errorText}`);
   }
 }
+
+/**
+ * Helper to extract sheet name from range (e.g. "Sheet1!A:F" -> "Sheet1")
+ */
+export function getSheetNameFromRange(range: string): string | null {
+  if (range.includes("!")) {
+    return range.split("!")[0].replace(/'/g, "");
+  }
+  return null;
+}
+
+export interface SheetInfo {
+  sheetId: number;
+  title: string;
+}
+
+/**
+ * Fetches sheet properties (sheetId and title) matching the sheet name in range,
+ * or defaults to the first sheet in the spreadsheet.
+ */
+export async function getSheetInfo(
+  accessToken: string,
+  spreadsheetId: string,
+  range: string
+): Promise<SheetInfo> {
+  const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}`;
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    next: { revalidate: 0 },
+    cache: "no-store",
+  });
+
+  if (!res.ok) {
+    const errorText = await res.text();
+    throw new Error(`Failed to fetch spreadsheet metadata: ${res.status} ${errorText}`);
+  }
+
+  const data = await res.json();
+  const sheets = data.sheets || [];
+  if (sheets.length === 0) {
+    throw new Error("No sheets found in spreadsheet.");
+  }
+
+  const sheetName = getSheetNameFromRange(range);
+  if (sheetName) {
+    const found = sheets.find(
+      (s: { properties: { title: string; sheetId?: number } }) =>
+        s.properties.title.toLowerCase() === sheetName.toLowerCase()
+    );
+    if (found) {
+      return {
+        sheetId: found.properties.sheetId || 0,
+        title: found.properties.title,
+      };
+    }
+  }
+
+  // Fallback to the first sheet
+  return {
+    sheetId: sheets[0].properties.sheetId || 0,
+    title: sheets[0].properties.title,
+  };
+}
+
+/**
+ * Updates a specific cell range with values
+ */
+export async function updateSheetValues(
+  accessToken: string,
+  spreadsheetId: string,
+  range: string,
+  values: string[][]
+): Promise<void> {
+  const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${encodeURIComponent(range)}?valueInputOption=USER_ENTERED`;
+  const res = await fetch(url, {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      range,
+      majorDimension: "ROWS",
+      values,
+    }),
+  });
+
+  if (!res.ok) {
+    const errorText = await res.text();
+    throw new Error(`Failed to update sheet values: ${res.status} ${errorText}`);
+  }
+}
+
+/**
+ * Applies professional retro-themed header styling, freezes the first row,
+ * and auto-resizes the first 6 columns.
+ */
+export async function applyHeaderStylingAndResize(
+  accessToken: string,
+  spreadsheetId: string,
+  sheetId: number
+): Promise<void> {
+  const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}:batchUpdate`;
+  const body = {
+    requests: [
+      // Style the first row (headers)
+      {
+        repeatCell: {
+          range: {
+            sheetId: sheetId,
+            startRowIndex: 0,
+            endRowIndex: 1,
+            startColumnIndex: 0,
+            endColumnIndex: 6,
+          },
+          cell: {
+            userEnteredFormat: {
+              backgroundColor: {
+                red: 34 / 255,      // #22572c (retro green)
+                green: 87 / 255,
+                blue: 44 / 255,
+              },
+              textFormat: {
+                foregroundColor: {
+                  red: 1.0,
+                  green: 1.0,
+                  blue: 1.0,
+                },
+                bold: true,
+                fontSize: 10,
+                fontFamily: "Arial",
+              },
+              horizontalAlignment: "CENTER",
+            },
+          },
+          fields: "userEnteredFormat(backgroundColor,textFormat,horizontalAlignment)",
+        },
+      },
+      // Freeze the first row
+      {
+        updateSheetProperties: {
+          properties: {
+            sheetId: sheetId,
+            gridProperties: {
+              frozenRowCount: 1,
+            },
+          },
+          fields: "gridProperties.frozenRowCount",
+        },
+      },
+      // Auto-resize the first 6 columns to fit contents
+      {
+        autoResizeDimensions: {
+          dimensions: {
+            sheetId: sheetId,
+            dimension: "COLUMNS",
+            startIndex: 0,
+            endIndex: 6,
+          },
+        },
+      },
+    ],
+  };
+
+  const res = await fetch(url, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+
+  if (!res.ok) {
+    const errorText = await res.text();
+    throw new Error(`Failed to batch update sheet styling: ${res.status} ${errorText}`);
+  }
+}
+
+/**
+ * Auto-resizes the first 6 columns to fit contents
+ */
+export async function autoResizeColumns(
+  accessToken: string,
+  spreadsheetId: string,
+  sheetId: number
+): Promise<void> {
+  const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}:batchUpdate`;
+  const body = {
+    requests: [
+      {
+        autoResizeDimensions: {
+          dimensions: {
+            sheetId: sheetId,
+            dimension: "COLUMNS",
+            startIndex: 0,
+            endIndex: 6,
+          },
+        },
+      },
+    ],
+  };
+
+  const res = await fetch(url, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+
+  if (!res.ok) {
+    const errorText = await res.text();
+    throw new Error(`Failed to auto-resize columns: ${res.status} ${errorText}`);
+  }
+}
+

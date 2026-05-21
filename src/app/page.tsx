@@ -3,6 +3,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import QRCode from "qrcode";
 import { ArrowUpRight } from "lucide-react";
 import { logoSvgPaths } from "@/lib/logo-svg-paths";
 import { useRevealOnScroll } from "@/hooks/use-reveal-on-scroll";
@@ -681,6 +682,18 @@ function MembershipModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => 
   const [submitError, setSubmitError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
+  const [qrCodeDataUrl, setQrCodeDataUrl] = useState("");
+
+  useEffect(() => {
+    if (!uniqueId) return;
+    QRCode.toDataURL(uniqueId, { margin: 1, width: 300 })
+      .then((url) => {
+        setQrCodeDataUrl(url);
+      })
+      .catch((err) => {
+        console.error("Failed to generate QR Code:", err);
+      });
+  }, [uniqueId]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -727,125 +740,165 @@ function MembershipModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => 
 
 const buildCardCanvas = (): Promise<HTMLCanvasElement> => {
   return new Promise(async (resolve) => {
-      // wait for Sora to be available
-  await document.fonts.load("bold 28px 'Sora'");
-  await document.fonts.load("400 16px 'Sora'");
+    // wait for Sora to be available
+    await document.fonts.load("bold 28px 'Sora'");
+    await document.fonts.load("400 16px 'Sora'");
 
-  const canvas = document.createElement("canvas");
-  const scale  = 2;
-  const W = 860, H = 440;
-  canvas.width  = W * scale;
-  canvas.height = H * scale;
+    const canvas = document.createElement("canvas");
+    const scale  = 2;
+    const W = 860, H = 440;
+    canvas.width  = W * scale;
+    canvas.height = H * scale;
 
-  const ctx = canvas.getContext("2d")!;
-  ctx.scale(scale, scale);
+    const ctx = canvas.getContext("2d")!;
+    ctx.scale(scale, scale);
 
-  const SORA = (size: number, weight: 400 | 600 | 700 | 800 = 400) =>
-    `${weight} ${size}px 'Sora', sans-serif`;
+    const SORA = (size: number, weight: 400 | 600 | 700 | 800 = 400) =>
+      `${weight} ${size}px 'Sora', sans-serif`;
 
-  const label = (text: string, lx: number, ly: number) => {
-    ctx.fillStyle = "#888880";
-    ctx.font = SORA(14, 700);
-    ctx.fillText(text.toUpperCase(), lx, ly);
-  };
+    const label = (text: string, lx: number, ly: number) => {
+      ctx.fillStyle = "#888880";
+      ctx.font = SORA(14, 700);
+      ctx.fillText(text.toUpperCase(), lx, ly);
+    };
 
-  const drawContent = () => {
-    const x = 96;
+    const drawContent = () => {
+      const x = 96;
 
-    // ── background ─────────────────────────────────────
-    ctx.fillStyle = "#f6f5f0";
-    ctx.fillRect(0, 0, W, H);
+      // ── background ─────────────────────────────────────
+      ctx.fillStyle = "#f6f5f0";
+      ctx.fillRect(0, 0, W, H);
 
-    // ── border ─────────────────────────────────────────
-    ctx.strokeStyle = "#e0ddd6";
-    ctx.lineWidth = 1;
-    ctx.strokeRect(0.5, 0.5, W - 1, H - 1);
+      // ── border ─────────────────────────────────────────
+      ctx.strokeStyle = "#e0ddd6";
+      ctx.lineWidth = 1;
+      ctx.strokeRect(0.5, 0.5, W - 1, H - 1);
 
-    // ── left stripes ───────────────────────────────────
-    ctx.fillStyle = "#22572c";
-    ctx.fillRect(0, 0, 32, H);
-    ctx.fillStyle = "#d46b4e";
-    ctx.fillRect(32, 0, 16, H);
+      // ── left stripes ───────────────────────────────────
+      ctx.fillStyle = "#22572c";
+      ctx.fillRect(0, 0, 32, H);
+      ctx.fillStyle = "#d46b4e";
+      ctx.fillRect(32, 0, 16, H);
 
-    // ── title ──────────────────────────────────────────
-    ctx.fillStyle = "#1a1a1a";
-    ctx.font = SORA(28, 800);
-    ctx.fillText("NEWGAP MEMBER ID", x, 76);
+      // ── title ──────────────────────────────────────────
+      ctx.fillStyle = "#1a1a1a";
+      ctx.font = SORA(28, 800);
+      ctx.fillText("NEWGAP MEMBER ID", x, 76);
 
-    // line 1 — official party name
-    ctx.fillStyle = "#d46b4e";
-    ctx.font = SORA(16, 700);
-    ctx.fillText(partyInfo.fullName.toUpperCase(), x, 96);
+      // line 1 — official party name
+      ctx.fillStyle = "#d46b4e";
+      ctx.font = SORA(16, 700);
+      ctx.fillText(partyInfo.fullName.toUpperCase(), x, 96);
 
-    // line 2 — founding info
-    ctx.fillStyle = "#888880";
-    ctx.font = SORA(14, 400);
-    ctx.fillText(partyInfo.preamble.founding.toUpperCase(), x, 114);
+      // line 2 — founding info
+      ctx.fillStyle = "#888880";
+      ctx.font = SORA(14, 400);
+      ctx.fillText(partyInfo.preamble.founding.toUpperCase(), x, 114);
 
-    // ── divider ────────────────────────────────────────
-    ctx.strokeStyle = "#d0cdc6";
-    ctx.lineWidth = 1;
-    ctx.beginPath();
-    ctx.moveTo(x, 132);
-    ctx.lineTo(W - 48, 132);
-    ctx.stroke();
+      // ── divider ────────────────────────────────────────
+      ctx.strokeStyle = "#d0cdc6";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(x, 132);
+      ctx.lineTo(W - 48, 132);
+      ctx.stroke();
 
-    // ── NAME ───────────────────────────────────────────
-    label("Name", x, 166);
-    ctx.fillStyle = "#1a1a1a";
-    ctx.font = SORA(24, 700);
-    ctx.fillText(formData.name.toUpperCase(), x, 192);
+      // ── NAME ───────────────────────────────────────────
+      label("Name", x, 166);
+      ctx.fillStyle = "#1a1a1a";
+      ctx.font = SORA(24, 700);
+      ctx.fillText(formData.name.toUpperCase(), x, 192);
 
-    // ── MEMBER UNIQUE ID ───────────────────────────────
-    label("Member Unique ID", x, 226);
-    ctx.fillStyle = "#22572c";
-    ctx.font = SORA(28, 800);
-    ctx.fillText(uniqueId, x, 256);
+      // ── MEMBER UNIQUE ID ───────────────────────────────
+      label("Member Unique ID", x, 226);
+      ctx.fillStyle = "#22572c";
+      ctx.font = SORA(28, 800);
+      ctx.fillText(uniqueId, x, 256);
 
-    // ── PHONE + DOB ────────────────────────────────────
-    label("Phone", x, 292);
-    ctx.fillStyle = "#1a1a1a";
-    ctx.font = SORA(20, 600);
-    ctx.fillText(formData.phone, x, 314);
+      // ── PHONE + DOB ────────────────────────────────────
+      label("Phone", x, 292);
+      ctx.fillStyle = "#1a1a1a";
+      ctx.font = SORA(20, 600);
+      ctx.fillText(formData.phone, x, 314);
 
-    label("D.O.B", W / 2, 292);
-    ctx.fillStyle = "#1a1a1a";
-    ctx.font = SORA(20, 600);
-    ctx.fillText(formData.dob, W / 2, 314);
+      label("D.O.B", W / 2, 292);
+      ctx.fillStyle = "#1a1a1a";
+      ctx.font = SORA(20, 600);
+      ctx.fillText(formData.dob, W / 2, 314);
 
-    // ── EMAIL + ISSUE DATE ─────────────────────────────
-    label("Email", x, 350);
-    ctx.fillStyle = "#555550";
-    ctx.font = SORA(20, 400);
-    ctx.fillText(formData.email.toLowerCase(), x, 372);
+      // ── EMAIL + ISSUE DATE ─────────────────────────────
+      label("Email", x, 350);
+      ctx.fillStyle = "#555550";
+      ctx.font = SORA(20, 400);
+      ctx.fillText(formData.email.toLowerCase(), x, 372);
 
-    label("Issue Date", W / 2, 350);
-    ctx.fillStyle = "#1a1a1a";
-    ctx.font = SORA(20, 600);
-    ctx.fillText(issueDate, W / 2, 372);
-  };
+      label("Issue Date", W / 2, 350);
+      ctx.fillStyle = "#1a1a1a";
+      ctx.font = SORA(20, 600);
+      ctx.fillText(issueDate, W / 2, 372);
+    };
 
-  // ── logo then draw ─────────────────────────────────
-  const logoImg = new Image(); 
-  logoImg.crossOrigin = "anonymous";
-  logoImg.src = "/logo-transparent.png";
+    // Load logo and QR code
+    const logoImg = new Image(); 
+    logoImg.crossOrigin = "anonymous";
+    logoImg.src = "/logo-transparent.png";
 
-  logoImg.onload = () => {
-    drawContent();
-    ctx.drawImage(logoImg, W - 48 - 96, 36, 96, 96);
-    resolve(canvas);
-  };
+    const qrImg = new Image();
+    const qrUrl = qrCodeDataUrl || (await QRCode.toDataURL(uniqueId, { margin: 1, width: 300 }));
+    qrImg.src = qrUrl;
 
-  logoImg.onerror = () => {
-    drawContent();
-    // fallback fist placeholder
-    ctx.fillStyle = "#22572c";
-    ctx.beginPath();
-    ctx.arc(W - 48 - 48, 84, 40, 0, Math.PI * 2);
-    ctx.fill();
-    resolve(canvas);
-  };
-});
+    let logoLoaded = false;
+    let qrLoaded = false;
+
+    const checkAndResolve = () => {
+      if (logoLoaded && qrLoaded) {
+        drawContent();
+        
+        // Draw logo
+        if (logoImg.complete && logoImg.naturalWidth !== 0) {
+          ctx.drawImage(logoImg, W - 48 - 96, 36, 96, 96);
+        } else {
+          // fallback fist placeholder
+          ctx.fillStyle = "#22572c";
+          ctx.beginPath();
+          ctx.arc(W - 48 - 48, 84, 40, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        // Draw QR code
+        if (qrImg.complete && qrImg.naturalWidth !== 0) {
+          ctx.drawImage(qrImg, W - 48 - 140, 180, 140, 140);
+          
+          // QR Code label
+          ctx.fillStyle = "#888880";
+          ctx.font = SORA(11, 700);
+          ctx.fillText("SCAN TO VERIFY", W - 48 - 140 + 70 - ctx.measureText("SCAN TO VERIFY").width / 2, 180 + 140 + 20);
+        }
+        
+        resolve(canvas);
+      }
+    };
+
+    logoImg.onload = () => {
+      logoLoaded = true;
+      checkAndResolve();
+    };
+
+    logoImg.onerror = () => {
+      logoLoaded = true;
+      checkAndResolve();
+    };
+
+    qrImg.onload = () => {
+      qrLoaded = true;
+      checkAndResolve();
+    };
+
+    qrImg.onerror = () => {
+      qrLoaded = true;
+      checkAndResolve();
+    };
+  });
 };
 
 // ── consumers ──────────────────────────────────────────────
@@ -1069,35 +1122,47 @@ const handlePrint = async () => {
 
                 <div className="h-px bg-[#1a1a1a]/20 mb-3" /> 
 
-                <div className="grid grid-cols-1 gap-y-1.5 sm:gap-y-2 text-xs">
-                  <div>
-                    <span className="text-[7px] uppercase font-black text-[#666666] block tracking-wide leading-none mb-0.5 sm:mb-1">NAME</span>
-                    <span className="font-bold uppercase text-[10px] sm:text-[12px] text-[#1a1a1a] leading-none">{formData.name}</span>
-                  </div>
-                  <div>
-                    <span className="text-[7px] uppercase font-black text-[#666666] block tracking-wide leading-none mb-0.5 sm:mb-1">MEMBER UNIQUE ID</span>
-                    <span className="font-black text-xs sm:text-[14px] text-[#22572c] uppercase leading-none">{uniqueId}</span>
-                  </div>
-                  <div className="grid grid-cols-2 gap-2">
+                <div className="flex justify-between items-end gap-3 mt-1 sm:mt-2">
+                  <div className="grid grid-cols-1 gap-y-1.5 sm:gap-y-2 text-xs flex-1 min-w-0">
                     <div>
-                      <span className="text-[7px] uppercase font-black text-[#666666] block tracking-wide leading-none mb-0.5 sm:mb-1">PHONE</span>
-                      <span className="font-semibold text-[9px] sm:text-[10px] text-[#1a1a1a] leading-none">{formData.phone}</span>
+                      <span className="text-[7px] uppercase font-black text-[#666666] block tracking-wide leading-none mb-0.5 sm:mb-1">NAME</span>
+                      <span className="font-bold uppercase text-[10px] sm:text-[12px] text-[#1a1a1a] leading-none truncate block">{formData.name}</span>
                     </div>
                     <div>
-                      <span className="text-[7px] uppercase font-black text-[#666666] block tracking-wide leading-none mb-0.5 sm:mb-1">D.O.B</span>
-                      <span className="font-semibold text-[9px] sm:text-[10px] text-[#1a1a1a] leading-none">{formData.dob}</span>
+                      <span className="text-[7px] uppercase font-black text-[#666666] block tracking-wide leading-none mb-0.5 sm:mb-1">MEMBER UNIQUE ID</span>
+                      <span className="font-black text-xs sm:text-[14px] text-[#22572c] uppercase leading-none block">{uniqueId}</span>
+                    </div>
+                    <div className="grid grid-cols-2 gap-2">
+                      <div>
+                        <span className="text-[7px] uppercase font-black text-[#666666] block tracking-wide leading-none mb-0.5 sm:mb-1">PHONE</span>
+                        <span className="font-semibold text-[9px] sm:text-[10px] text-[#1a1a1a] leading-none block">{formData.phone}</span>
+                      </div>
+                      <div>
+                        <span className="text-[7px] uppercase font-black text-[#666666] block tracking-wide leading-none mb-0.5 sm:mb-1">D.O.B</span>
+                        <span className="font-semibold text-[9px] sm:text-[10px] text-[#1a1a1a] leading-none block">{formData.dob}</span>
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-2">
+                      <div>
+                        <span className="text-[7px] uppercase font-black text-[#666666] block tracking-wide leading-none mb-0.5 sm:mb-1">EMAIL</span>
+                        <span className="font-semibold text-[9px] sm:text-[10px] lowercase text-[#666666] leading-none truncate block">{formData.email}</span>
+                      </div>
+                      <div>
+                        <span className="text-[7px] uppercase font-black text-[#666666] block tracking-wide leading-none mb-0.5 sm:mb-1">ISSUE DATE</span>
+                        <span className="font-semibold text-[9px] sm:text-[10px] text-[#1a1a1a] leading-none block">{issueDate}</span>
+                      </div>
                     </div>
                   </div>
-                  <div className="grid grid-cols-2 gap-2">
-                    <div>
-                      <span className="text-[7px] uppercase font-black text-[#666666] block tracking-wide leading-none mb-0.5 sm:mb-1">EMAIL</span>
-                      <span className="font-semibold text-[9px] sm:text-[10px] lowercase text-[#666666] leading-none">{formData.email}</span>
+                  {qrCodeDataUrl && (
+                    <div className="flex flex-col items-center shrink-0 -mb-1 sm:-mb-2">
+                      <img 
+                        src={qrCodeDataUrl} 
+                        alt="QR Code" 
+                        className="w-14 sm:w-20 h-14 sm:h-20 object-contain border border-[#1a1a1a]/25 p-0.5 bg-white shadow-[2px_2px_0px_rgba(0,0,0,0.1)]" 
+                      />
+                      <span className="text-[5px] sm:text-[7px] uppercase tracking-wider text-[#888880] font-black mt-1 leading-none">SCAN TO VERIFY</span>
                     </div>
-                    <div>
-                      <span className="text-[7px] uppercase font-black text-[#666666] block tracking-wide leading-none mb-0.5 sm:mb-1">ISSUE DATE</span>
-                      <span className="font-semibold text-[9px] sm:text-[10px] text-[#1a1a1a] leading-none">{issueDate}</span>
-                    </div>
-                  </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -1138,31 +1203,3 @@ export default function Home() {
   return <Index />;
 }
 
-
-// Helper: extract first 3 consonants from a name
-function getConsonants(name: string): string {
-  const consonants = name
-    .toLowerCase()
-    .replace(/[^a-z]/g, '')
-    .split('')
-    .filter(c => !'aeiou'.includes(c));
-  return consonants.slice(0, 3).join('').toUpperCase();
-}
-
-// Helper: 
-
-function getDobYearHex(dob: string): string {
-  const year = 2000 + parseInt(dob.slice(4, 6), 10); // "01" → 2001
-  return year.toString(16).toUpperCase();             // 2001 → "7D1"
-}
-
-// Helper: build YYYYDDHHmmss suffix from current time
-function getTimestampSuffix(): string {
-  const now  = new Date();
-  const yyyy = now.getFullYear();
-  const dd   = String(now.getDate()).padStart(2, '0');
-  const HH   = String(now.getHours()).padStart(2, '0');
-  const mm   = String(now.getMinutes()).padStart(2, '0');
-  const ss   = String(now.getSeconds()).padStart(2, '0');
-  return `${yyyy}${dd}${HH}${mm}${ss}`;
-}

@@ -1,12 +1,20 @@
 import { NextResponse } from "next/server";
-import { getGoogleAuthToken, readSheetData, appendRowToSheet } from "@/lib/google-sheets";
+import { 
+  getGoogleAuthToken, 
+  readSheetData, 
+  appendRowToSheet,
+  getSheetInfo,
+  updateSheetValues,
+  applyHeaderStylingAndResize,
+  autoResizeColumns
+} from "@/lib/google-sheets";
 
 export const dynamic = "force-dynamic";
 
 const GOOGLE_SERVICE_ACCOUNT_EMAIL = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
 const GOOGLE_PRIVATE_KEY = process.env.GOOGLE_PRIVATE_KEY;
 const GOOGLE_SHEET_ID = process.env.GOOGLE_SHEET_ID;
-const GOOGLE_SHEET_RANGE = process.env.GOOGLE_SHEET_RANGE || "Sheet1!A:F";
+const GOOGLE_SHEET_RANGE = process.env.GOOGLE_SHEET_RANGE || "Members!A:F";
 
 // Helper: check if sheets API credentials are fully configured
 function checkConfig() {
@@ -51,12 +59,35 @@ function getTimestampSuffix(): string {
   return `${yyyy}${dd}${HH}${mm}${ss}`;
 }
 
+const EXPECTED_HEADERS = ["Timestamp", "Name", "Email", "Phone", "DOB", "Unique ID"];
+
+async function ensureHeadersAndGetRows(token: string): Promise<string[][]> {
+  let rows = await readSheetData(token, GOOGLE_SHEET_ID!, GOOGLE_SHEET_RANGE);
+  
+  const hasHeaders = rows.length > 0 && 
+    rows[0] && 
+    rows[0][0] === EXPECTED_HEADERS[0] && 
+    rows[0][5] === EXPECTED_HEADERS[5];
+
+  if (!hasHeaders) {
+    const sheetInfo = await getSheetInfo(token, GOOGLE_SHEET_ID!, GOOGLE_SHEET_RANGE);
+    const headerRange = sheetInfo.title ? `${sheetInfo.title}!A1:F1` : "A1:F1";
+    
+    await updateSheetValues(token, GOOGLE_SHEET_ID!, headerRange, [EXPECTED_HEADERS]);
+    await applyHeaderStylingAndResize(token, GOOGLE_SHEET_ID!, sheetInfo.sheetId);
+    
+    rows = await readSheetData(token, GOOGLE_SHEET_ID!, GOOGLE_SHEET_RANGE);
+  }
+  
+  return rows;
+}
+
 export async function GET() {
   try {
     checkConfig();
 
     const token = await getGoogleAuthToken(GOOGLE_SERVICE_ACCOUNT_EMAIL!, GOOGLE_PRIVATE_KEY!);
-    const rows = await readSheetData(token, GOOGLE_SHEET_ID!, GOOGLE_SHEET_RANGE);
+    const rows = await ensureHeadersAndGetRows(token);
 
     const emails: string[] = [];
     const uniqueIds: string[] = [];
@@ -74,9 +105,10 @@ export async function GET() {
     }
 
     return NextResponse.json({ emails, uniqueIds });
-  } catch (error: any) {
-    console.error("Error checking records:", error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  } catch (error) {
+    const err = error as Error;
+    console.error("Error checking records:", err);
+    return NextResponse.json({ error: err.message }, { status: 500 });
   }
 }
 
@@ -91,7 +123,7 @@ export async function POST(req: Request) {
     }
 
     const token = await getGoogleAuthToken(GOOGLE_SERVICE_ACCOUNT_EMAIL!, GOOGLE_PRIVATE_KEY!);
-    const rows = await readSheetData(token, GOOGLE_SHEET_ID!, GOOGLE_SHEET_RANGE);
+    const rows = await ensureHeadersAndGetRows(token);
 
     const emails: string[] = [];
     const uniqueIds: string[] = [];
@@ -154,13 +186,22 @@ export async function POST(req: Request) {
     // Append to sheet
     await appendRowToSheet(token, GOOGLE_SHEET_ID!, GOOGLE_SHEET_RANGE, newRow);
 
+    // Auto-resize columns to be responsive based on content width
+    try {
+      const sheetInfo = await getSheetInfo(token, GOOGLE_SHEET_ID!, GOOGLE_SHEET_RANGE);
+      await autoResizeColumns(token, GOOGLE_SHEET_ID!, sheetInfo.sheetId);
+    } catch (resizeErr) {
+      console.error("Failed to auto-resize columns after append:", resizeErr);
+    }
+
     return NextResponse.json({
       success: true,
       uniqueId: generatedId,
       issueDate: formattedIssueDate,
     });
-  } catch (error: any) {
-    console.error("Error submitting record:", error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  } catch (error) {
+    const err = error as Error;
+    console.error("Error submitting record:", err);
+    return NextResponse.json({ error: err.message }, { status: 500 });
   }
 }
