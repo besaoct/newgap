@@ -75,7 +75,7 @@ function VerificationContent() {
       <main className="flex-1 flex flex-col items-center justify-center p-6 my-12 w-full max-w-4xl mx-auto">
         <Link 
           href="/" 
-          className="group mb-8 inline-flex items-center gap-2 text-xs font-bold tracking-wider uppercase text-[#1a1a1a]/70 hover:text-[#1a1a1a] transition-colors bg-[#f6f5f0] border-2 border-[#1a1a1a] px-4 py-2 rounded-sm shadow-[2px_2px_0px_#1a1a1a] hover:translate-y-[1px] hover:shadow-[1px_1px_0px_#1a1a1a]"
+          className="group mb-8 inline-flex items-center gap-2 text-xs font-bold tracking-wider uppercase text-[#1a1a1a]/70 hover:text-[#1a1a1a] transition-colors bg-[#f6f5f0] border-2 border-[#1a1a1a] px-4 py-2 rounded-sm shadow-[2px_2px_0px_#1a1a1a] hover:translate-y-px hover:shadow-[1px_1px_0px_#1a1a1a]"
         >
           <ArrowLeft className="size-3.5 group-hover:-translate-x-0.5 transition-transform" />
           Back to Homepage
@@ -104,7 +104,7 @@ function VerificationContent() {
                   Querying Live Registry
                 </h3>
                 <p className="text-xs text-[#888880] uppercase tracking-wider mt-1">
-                  Connecting to Sheets API Database...
+                  Checking official records...
                 </p>
               </div>
             </div>

@@ -208,34 +208,43 @@
     cursor: pointer;
   }
   .btn-retro-secondary:hover {
-    background-color: var(--on-surface);
+    background-color: var(--secondary);
     color: var(--background);
   }
   .btn-retro-secondary:active {
     background-color: var(--on-surface-variant);
   }
 
-  /* Protest hand animations */
-  .animate-protest-left {
-    animation: protest-updown 1.2s ease-in-out infinite;
-  }
-  .animate-protest-mid { 
-    animation: protest-updown 1.7s ease-in-out infinite;
-    animation-delay: 0.3s;
-  }
-  .animate-protest-right {
-    animation: protest-updown 1.3s ease-in-out infinite;
-    animation-delay: 0.5s;
+
+  @keyframes lightning-strike {
+    0%, 80%, 82%, 84%, 88%, 90%, 92%, 100% {
+      opacity: 1;
+      fill: #d46b4e;
+      stroke: #d46b4e;
+      filter: drop-shadow(0 0 4px rgba(212,107,78,0.6));
+      transform: scale(1);
+    }
+    81%, 83%, 89%, 91% {
+      opacity: 0.15;
+      fill: #f6f5f0;
+      stroke: #f6f5f0;
+      filter: none;
+      transform: scale(0.98);
+    }
+    85%, 87%, 93%, 95% {
+      opacity: 1;
+      fill: #ffffff;
+      stroke: #ffffff;
+      filter: drop-shadow(0 0 30px rgba(255,255,255,1)) drop-shadow(0 0 10px #d46b4e);
+      transform: scale(1.05);
+    }
   }
 
-  @keyframes protest-updown {
-    0%, 100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-45px);
-    }
-  }
+  .animate-lightning {
+  animation: lightning-strike 1.5s infinite linear 3s;
+  transform-origin: center;
+  transform-box: fill-box;
+}
 
   /* Date field mobile Safari/iOS fix */
   input[type="date"] {

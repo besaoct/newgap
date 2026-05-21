@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 950 950" width="100%" height="100%">
+<rect width="100%" height="100%" fill="#f6f5f0"/>
+  <!-- =========================
+       BACKGROUND INNER CIRCLE
+       Change r for inner size
+  ========================== -->
+  <circle 
+    cx="495" 
+    cy="475" 
+    r="280" 
+    fill="#f6f5f0" 
+  />
+
+  <!-- =========================
+       OUTER GREEN RING
+       r = ring size
+       stroke-width = ring thickness
+  ========================== -->
+  <circle 
+    cx="495" 
+    cy="475" 
+    r="300" 
+    fill="none" 
+    stroke="#22572c" 
+    stroke-width="50" 
+  />
+
+  <!-- =========================
+       ELECTRIC ZAP
+       TOP WIDTH:
+       Change first horizontal line:
+       L 710 145
+
+       LOWER WIDTH:
+       Change:
+       L 660 343
+       L 635 541
+
+       HEIGHT:
+       Top point:
+       M 475 120
+
+       Bottom point:
+       L 310 790
+
+       CENTER THICKNESS:
+       Adjust middle left/right values
+  ========================== -->
+  <g>
+
+    <path
+      d="
+        M 475 120
+
+        L 710 145
+        L 590 350
+        L 690 350
+
+        L 565 555
+        L 660 555
+
+        L 310 790
+
+        L 435 555
+        L 330 555
+
+        L 455 350
+        L 360 350
+
+        Z
+      "
+      fill="#d46b4e"
+      stroke="#d46b4e"
+      stroke-width="4"
+      stroke-linejoin="miter"
+      stroke-linecap="round"
+    />
+
+  </g>
+</svg>

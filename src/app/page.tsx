@@ -5,7 +5,6 @@ import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import QRCode from "qrcode";
 import { ArrowUpRight, X, Loader2, ShieldCheck, ShieldAlert, Search } from "lucide-react";
-import { logoSvgPaths } from "@/lib/logo-svg-paths";
 import { useRevealOnScroll } from "@/hooks/use-reveal-on-scroll";
 import {
   partyInfo,
@@ -133,55 +132,23 @@ const SwarmSwarm = () => {
   return <div ref={containerRef} className="absolute inset-0 opacity-100 pointer-events-none z-0" />;
 };
 
-function AnimatedProtest() {
+function AnimatedRightSide() {
+
   return (
     <div className="relative w-full max-w-lg mx-auto aspect-square flex items-center justify-center overflow-hidden">
       <svg viewBox="0 0 950 950" className="w-full h-full select-none pointer-events-none">
-        <defs>
-          <clipPath id="hand-cut">
-            <rect x="0" y="0" width="950" height="800" />
-          </clipPath>
-        </defs>
-
-        {/* Sun group moved slightly up */}
-        <g transform="translate(0, -25)">
-          {/* Static Sun rays from logo */}
-          <g>
-            {logoSvgPaths.sunRays.map((path, i) => (
-              <path key={i} d={path} fill="#d46b4e" opacity="0.9" />
-            ))}
-          </g>
-
-          {/* Sun center core */}
-          <path d={logoSvgPaths.sunCore} fill="#d46b4e" />
-        </g>
-
-        {/* Fists from logo */}
-        {/* Left Fist */}
-        <g className="animate-protest-left">
-          <g clipPath="url(#hand-cut)">
-            {logoSvgPaths.leftHand.map((path, i) => (
-              <path key={i} d={path} fill="#22572c" />
-            ))}
-          </g>
-        </g>
-
-        {/* Right Fist */}
-        <g className="animate-protest-right">
-          <g clipPath="url(#hand-cut)">
-            {logoSvgPaths.rightHand.map((path, i) => (
-              <path key={i} d={path} fill="#22572c" />
-            ))}
-          </g>
-        </g>
-
-        {/* Middle Fist */}
-         <g transform="translate(0, -25)">
-        <g className="">
-          {logoSvgPaths.middleHand.map((path, i) => (
-            <path key={i} d={path} fill="#22572c" />
-          ))}
-        </g>
+        <circle cx="495" cy="475" r="280" fill="#f6f5f0" />
+        <circle cx="495" cy="475" r="300" fill="none" stroke="#22572c" strokeWidth="50" />
+        <g>
+          <path
+            className="animate-lightning"
+            d="M 475 120 L 710 145 L 590 350 L 690 350 L 565 555 L 660 555 L 310 790 L 435 555 L 330 555 L 455 350 L 360 350 Z"
+            fill="#d46b4e"
+            stroke="#d46b4e"
+            strokeWidth="4"
+            strokeLinejoin="miter"
+            strokeLinecap="round"
+          />
         </g>
       </svg>
     </div>
@@ -199,9 +166,9 @@ function Nav({ onJoinClick }: { onJoinClick: () => void }) {
           priority
           fetchPriority="high"
           loading="eager"  
-          src="/logo-transparent.png" alt="NEWGAP Logo" className="size-24 object-contain" />
+          src="/logo-transparent.png" alt="NEWGAP Logo" className="size-16 object-contain" />
        
-          <div className="flex flex-col mt-4  justify-center items-start">
+          <div className="flex flex-col  justify-center items-start">
             <div className="flex gap-0 text-headline-md leading-[0.85]  uppercase font-headline-xl text-on-surface"> <span className=" leading-[0.85] text-secondary">NEW
             </span>
             <span className=" text-primary leading-[0.85]">
@@ -269,10 +236,10 @@ function Hero({ onVerifyClick }: { onVerifyClick: () => void }) {
               </a>
               <button 
                 onClick={onVerifyClick}
-                className="btn-retro-secondary px-12 py-6 text-sm font-bold w-full sm:w-auto text-center flex items-center justify-center gap-1.5 cursor-pointer"
+                className="btn-retro-secondary group px-12 py-6 text-sm font-bold w-full sm:w-auto text-center flex items-center justify-center gap-1.5 cursor-pointer"
               >
                 Verify ID
-                <ShieldCheck className="w-4 h-4 shrink-0 text-secondary" />
+                <ShieldCheck className="w-4 h-4 shrink-0 text-secondary group-hover:text-white" />
               </button>
             </div>
             <p className="mt-12 text-mono-label text-on-surface-variant uppercase tracking-widest font-mono-label">{partyInfo.hq}</p>
@@ -280,7 +247,7 @@ function Hero({ onVerifyClick }: { onVerifyClick: () => void }) {
 
           {/* Right Column - Animated Protest SVG */}
           <div className="lg:col-span-5 w-full flex justify-center">
-            <AnimatedProtest />
+            <AnimatedRightSide />
           </div>
         </div>
       </div>
@@ -852,7 +819,7 @@ const buildCardCanvas = (): Promise<HTMLCanvasElement> => {
     logoImg.src = "/logo-transparent.png";
 
     const qrImg = new Image();
-    const origin = typeof window !== "undefined" ? window.location.origin : "";
+    const origin = typeof window !== "undefined" ? window.location.origin : "https://newgap.org";
     const verificationUrl = origin ? `${origin}/verify?id=${uniqueId}` : uniqueId;
     const qrUrl = qrCodeDataUrl || (await QRCode.toDataURL(verificationUrl, { margin: 1, width: 300 }));
     qrImg.src = qrUrl;
@@ -877,12 +844,12 @@ const buildCardCanvas = (): Promise<HTMLCanvasElement> => {
 
         // Draw QR code
         if (qrImg.complete && qrImg.naturalWidth !== 0) {
-          ctx.drawImage(qrImg, W - 48 - 140, 180, 140, 140);
-          
+          ctx.drawImage(qrImg, W - 48 - 155, 225, 155, 155);
+           
           // QR Code label
-          ctx.fillStyle = "#888880";
-          ctx.font = SORA(11, 700);
-          ctx.fillText("SCAN TO VERIFY", W - 48 - 140 + 70 - ctx.measureText("SCAN TO VERIFY").width / 2, 180 + 140 + 20);
+          // ctx.fillStyle = "#888880";
+          // ctx.font = SORA(11, 700);
+          // ctx.fillText("SCAN TO VERIFY", W - 48 - 140 + 70 - ctx.measureText("SCAN TO VERIFY").width / 2, 180 + 140 + 20);
         }
         
         resolve(canvas);
@@ -972,11 +939,14 @@ const handlePrint = async () => {
 
   return (
     <div className="fixed inset-0 z-100 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+      
       {/* Modal Box */}
       <div 
         className="w-full max-w-lg bg-[#f6f5f0] border border-[#1a1a1a] p-8 relative shadow-[8px_8px_0px_#1a1a1a] overflow-hidden"
         onClick={(e) => e.stopPropagation()} // Prevent click propagation, making closing from outside impossible
       >
+           <div className="absolute top-0 inset-x-0 h-1.5 bg-[#22572c]" />
+
         <button 
           onClick={onClose}
           className="absolute top-4 right-4 bg-[#f6f5f0] border-2 border-[#1a1a1a] hover:bg-[#d46b4e]/20  font-black transition-all flex items-center justify-center aspect-square select-none w-5 h-5 leading-none z-10"
@@ -1170,7 +1140,7 @@ const handlePrint = async () => {
                         alt="QR Code" 
                         className="w-14 sm:w-20 h-14 sm:h-20 object-contain border border-[#1a1a1a]/25 p-0.5 bg-white shadow-[2px_2px_0px_rgba(0,0,0,0.1)]" 
                       />
-                      <span className="text-[5px] sm:text-[7px] uppercase tracking-wider text-[#888880] font-black mt-1 leading-none">SCAN TO VERIFY</span>
+                      {/* <span className="text-[5px] sm:text-[7px] uppercase tracking-wider text-[#888880] font-black mt-1 leading-none">SCAN TO VERIFY</span> */}
                     </div>
                   )}
                 </div>
@@ -1281,7 +1251,7 @@ function VerifyModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
                 Querying Live Registry
               </h3>
               <p className="text-xs text-[#888880] uppercase tracking-wider mt-1">
-                Connecting to Sheets API Database...
+                Checking official records...
               </p>
             </div>
           </div>
