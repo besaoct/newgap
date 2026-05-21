@@ -113,7 +113,7 @@ function VerificationContent() {
               {result.verified ? (
                 // Verified State
                 <div className="text-center">
-                  <div className="inline-flex items-center justify-center bg-[#22572c]/10 border border-[#22572c] p-4 rounded-full mb-4 animate-bounce animate-duration-1000">
+                  <div className="inline-flex items-center justify-center bg-[#22572c]/10 border border-[#22572c] p-4 rounded-full mb-4">
                     <ShieldCheck className="size-12 text-[#22572c]" />
                   </div>
                   <h3 className="text-xl font-extrabold text-[#22572c] uppercase tracking-tight">
