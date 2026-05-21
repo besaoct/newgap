@@ -212,7 +212,7 @@
     color: var(--background);
   }
   .btn-retro-secondary:active {
-    background-color: var(--on-surface-variant);
+    background-color: var(--secondary);
   }
 
 

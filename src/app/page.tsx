@@ -239,7 +239,7 @@ function Hero({ onVerifyClick }: { onVerifyClick: () => void }) {
                 className="btn-retro-secondary group px-12 py-6 text-sm font-bold w-full sm:w-auto text-center flex items-center justify-center gap-1.5 cursor-pointer"
               >
                 Verify ID
-                <ShieldCheck className="w-4 h-4 shrink-0 text-secondary group-hover:text-white" />
+                <ShieldCheck className="w-4 h-4 shrink-0" />
               </button>
             </div>
             <p className="mt-12 text-mono-label text-on-surface-variant uppercase tracking-widest font-mono-label">{partyInfo.hq}</p>
