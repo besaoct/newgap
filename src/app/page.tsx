@@ -686,7 +686,9 @@ function MembershipModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => 
 
   useEffect(() => {
     if (!uniqueId) return;
-    QRCode.toDataURL(uniqueId, { margin: 1, width: 300 })
+    const origin = typeof window !== "undefined" ? window.location.origin : "";
+    const verificationUrl = origin ? `${origin}/verify?id=${uniqueId}` : uniqueId;
+    QRCode.toDataURL(verificationUrl, { margin: 1, width: 300 })
       .then((url) => {
         setQrCodeDataUrl(url);
       })
@@ -844,7 +846,9 @@ const buildCardCanvas = (): Promise<HTMLCanvasElement> => {
     logoImg.src = "/logo-transparent.png";
 
     const qrImg = new Image();
-    const qrUrl = qrCodeDataUrl || (await QRCode.toDataURL(uniqueId, { margin: 1, width: 300 }));
+    const origin = typeof window !== "undefined" ? window.location.origin : "";
+    const verificationUrl = origin ? `${origin}/verify?id=${uniqueId}` : uniqueId;
+    const qrUrl = qrCodeDataUrl || (await QRCode.toDataURL(verificationUrl, { margin: 1, width: 300 }));
     qrImg.src = qrUrl;
 
     let logoLoaded = false;

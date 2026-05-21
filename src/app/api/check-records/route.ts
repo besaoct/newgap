@@ -82,12 +82,35 @@ async function ensureHeadersAndGetRows(token: string): Promise<string[][]> {
   return rows;
 }
 
-export async function GET() {
+export async function GET(req: Request) {
   try {
     checkConfig();
 
+    const { searchParams } = new URL(req.url);
+    const idToVerify = searchParams.get("id")?.trim();
+
     const token = await getGoogleAuthToken(GOOGLE_SERVICE_ACCOUNT_EMAIL!, GOOGLE_PRIVATE_KEY!);
     const rows = await ensureHeadersAndGetRows(token);
+
+    if (idToVerify) {
+      const matchingRow = rows.find(
+        (row, index) => index > 0 && row && row[5]?.trim().toLowerCase() === idToVerify.toLowerCase()
+      );
+
+      if (matchingRow) {
+        return NextResponse.json({
+          verified: true,
+          name: matchingRow[1]?.trim() || "Anonymous",
+          uniqueId: matchingRow[5]?.trim(),
+          issueDate: matchingRow[0]?.trim() || "",
+        });
+      } else {
+        return NextResponse.json(
+          { verified: false, error: "Member ID not found in the registry." },
+          { status: 404 }
+        );
+      }
+    }
 
     const emails: string[] = [];
     const uniqueIds: string[] = [];
