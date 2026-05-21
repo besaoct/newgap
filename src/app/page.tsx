@@ -4,7 +4,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import QRCode from "qrcode";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, X, Loader2, ShieldCheck, ShieldAlert, Search } from "lucide-react";
 import { logoSvgPaths } from "@/lib/logo-svg-paths";
 import { useRevealOnScroll } from "@/hooks/use-reveal-on-scroll";
 import {
@@ -22,7 +22,6 @@ import {
   finalWord,
   ctas,
 } from "@/data/content";
-import { X } from "lucide-react";
 import NextImage from "next/image";
 
 const MAX = "max-w-7xl mx-auto w-full";
@@ -232,7 +231,7 @@ function Nav({ onJoinClick }: { onJoinClick: () => void }) {
   );
 }
 
-function Hero() {
+function Hero({ onVerifyClick }: { onVerifyClick: () => void }) {
   return (
     <section className={`relative min-h-screen flex items-center justify-center py-32 overflow-hidden grid-bg`}>
       <div className="absolute inset-0 bg-linear-to-b from-background via-transparent to-background pointer-events-none" />
@@ -268,10 +267,13 @@ function Hero() {
                 {ctas.primary.label.replace("↗", "").trim()}
                 <ArrowUpRight className="w-4 h-4 shrink-0" />
               </a>
-              <a href={ctas.secondary.url} target="_blank" rel="noreferrer" className="btn-retro-secondary px-12 py-6 text-sm font-bold w-full sm:w-auto text-center flex items-center justify-center gap-1.5">
-                {ctas.secondary.label.replace("↗", "").trim()}
-                <ArrowUpRight className="w-4 h-4 shrink-0" />
-              </a>
+              <button 
+                onClick={onVerifyClick}
+                className="btn-retro-secondary px-12 py-6 text-sm font-bold w-full sm:w-auto text-center flex items-center justify-center gap-1.5 cursor-pointer"
+              >
+                Verify ID
+                <ShieldCheck className="w-4 h-4 shrink-0 text-secondary" />
+              </button>
             </div>
             <p className="mt-12 text-mono-label text-on-surface-variant uppercase tracking-widest font-mono-label">{partyInfo.hq}</p>
           </div>
@@ -643,12 +645,13 @@ function Footer() {
 function Index() {
   useRevealOnScroll();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isVerifyModalOpen, setIsVerifyModalOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-background text-on-surface selection:bg-primary selection:text-on-primary">
       <Nav onJoinClick={() => setIsModalOpen(true)} />
       <main className="pt-16">
-        <Hero />
+        <Hero onVerifyClick={() => setIsVerifyModalOpen(true)} />
         <Preamble />
         <FiveWordsSection />
         <Pillars />
@@ -664,6 +667,9 @@ function Index() {
       <Footer />
       {isModalOpen && (
         <MembershipModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      )}
+      {isVerifyModalOpen && (
+        <VerifyModal isOpen={isVerifyModalOpen} onClose={() => setIsVerifyModalOpen(false)} />
       )}
     </div>
   );
@@ -1198,6 +1204,203 @@ const handlePrint = async () => {
           </div>
         )
 }
+      </div>
+    </div>
+  );
+}
+
+function VerifyModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
+  const [memberId, setMemberId] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [result, setResult] = useState<{
+    verified: boolean;
+    name?: string;
+    uniqueId?: string;
+    issueDate?: string;
+    error?: string;
+  } | null>(null);
+
+  if (!isOpen) return null;
+
+  const performLookup = async (id: string) => {
+    if (!id.trim()) return;
+    setLoading(true);
+    setResult(null);
+    try {
+      const res = await fetch(`/api/check-records?id=${encodeURIComponent(id.trim())}`);
+      const data = await res.json();
+      if (res.ok) {
+        setResult({
+          verified: true,
+          name: data.name,
+          uniqueId: data.uniqueId,
+          issueDate: data.issueDate,
+        });
+      } else {
+        setResult({
+          verified: false,
+          error: data.error || "Member ID could not be found.",
+        });
+      }
+    } catch {
+      setResult({
+        verified: false,
+        error: "A network error occurred. Please check your connection and try again.",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    performLookup(memberId);
+  };
+
+  return (
+    <div className="fixed inset-0 z-100 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 font-mono-label">
+      <div 
+        className="w-full max-w-md bg-[#f6f5f0] border border-[#1a1a1a] p-8 relative shadow-[8px_8px_0px_#1a1a1a] overflow-hidden"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button 
+          onClick={onClose}
+          className="absolute top-4 right-4 bg-[#f6f5f0] border-2 border-[#1a1a1a] hover:bg-[#d46b4e]/20 font-black transition-all flex items-center justify-center aspect-square select-none w-5 h-5 leading-none z-10 cursor-pointer"
+          style={{ boxShadow: '2px 2px 0px #000' }}
+        >
+          <X className="size-4"/>
+        </button>
+
+        <div className="absolute top-0 inset-x-0 h-1.5 bg-[#22572c]" />
+
+        {loading ? (
+          <div className="py-12 text-center flex flex-col items-center justify-center gap-4">
+            <Loader2 className="animate-spin size-12 text-[#d46b4e]" />
+            <div>
+              <h3 className="text-lg font-extrabold uppercase text-[#1a1a1a]">
+                Querying Live Registry
+              </h3>
+              <p className="text-xs text-[#888880] uppercase tracking-wider mt-1">
+                Connecting to Sheets API Database...
+              </p>
+            </div>
+          </div>
+        ) : result ? (
+          <div>
+            {result.verified ? (
+              <div className="text-center">
+                <div className="inline-flex items-center justify-center bg-[#22572c]/10 border border-[#22572c] p-4 rounded-full mb-4">
+                  <ShieldCheck className="size-12 text-[#22572c]" />
+                </div>
+                <h3 className="text-xl font-extrabold text-[#22572c] uppercase tracking-tight">
+                  Credential Verified
+                </h3>
+                <p className="text-xs font-bold text-[#888880] uppercase tracking-widest mt-1">
+                  OFFICIAL NEWGAP MEMBER RECORD
+                </p>
+
+                <div className="mt-6 border-2 border-[#1a1a1a] bg-[#f6f5f0] p-4 text-left relative shadow-[4px_4px_0px_#1a1a1a] space-y-4">
+                  <div className="absolute top-0 bottom-0 left-0 w-2 bg-[#22572c]" />
+                  <div className="pl-4">
+                    <span className="block text-[8px] uppercase tracking-widest font-black text-[#888880] mb-1">
+                      MEMBER NAME
+                    </span>
+                    <span className="block text-sm font-bold uppercase text-[#1a1a1a]">
+                      {result.name}
+                    </span>
+                  </div>
+                  <div className="pl-4 border-t border-[#1a1a1a]/10 pt-3">
+                    <span className="block text-[8px] uppercase tracking-widest font-black text-[#888880] mb-1">
+                      UNIQUE MEMBER ID
+                    </span>
+                    <span className="block text-xs font-black text-[#22572c] uppercase tracking-wider">
+                      {result.uniqueId}
+                    </span>
+                  </div>
+                  <div className="pl-4 border-t border-[#1a1a1a]/10 pt-3">
+                    <span className="block text-[8px] uppercase tracking-widest font-black text-[#888880] mb-1">
+                      REGISTRY TIMESTAMP
+                    </span>
+                    <span className="block text-xs font-semibold text-[#1a1a1a]">
+                      {result.issueDate}
+                    </span>
+                  </div>
+                  <div className="pl-4 border-t border-[#1a1a1a]/10 pt-3">
+                    <span className="block text-[8px] uppercase tracking-widest font-black text-[#888880] mb-1">
+                      STATUS
+                    </span>
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-sm bg-[#22572c]/15 text-[#22572c] border border-[#22572c]/30 text-[9px] font-black uppercase tracking-wider">
+                      <span className="size-1.5 rounded-full bg-[#22572c] animate-ping" />
+                      Active Member
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="text-center">
+                <div className="inline-flex items-center justify-center bg-[#d46b4e]/10 border border-[#d46b4e] p-4 rounded-full mb-4">
+                  <ShieldAlert className="size-12 text-[#d46b4e]" />
+                </div>
+                <h3 className="text-xl font-extrabold text-[#d46b4e] uppercase tracking-tight">
+                  Verification Failed
+                </h3>
+                <p className="text-xs font-bold text-[#888880] uppercase tracking-widest mt-1">
+                  INVALID CREDENTIALS
+                </p>
+
+                <div className="mt-6 bg-[#d46b4e]/10 border border-[#d46b4e] text-[#d46b4e] p-4 text-xs font-bold uppercase tracking-wider text-left leading-relaxed shadow-[4px_4px_0px_#d46b4e]">
+                  Oops! {result.error || "The scanned ID does not exist in the official database."}
+                </div>
+              </div>
+            )}
+
+            <button
+              onClick={() => {
+                setResult(null);
+                setMemberId("");
+              }}
+              className="btn-retro-secondary w-full py-4 text-xs font-bold mt-8 flex justify-center items-center gap-2 cursor-pointer"
+            >
+              Verify Another Card
+            </button>
+          </div>
+        ) : (
+          <div>
+            <div className="mb-6 border-b-2 border-[#1a1a1a] pb-4">
+              <h3 className="text-headline-sm uppercase text-[#1a1a1a] font-extrabold tracking-tight flex items-center gap-2">
+                <ShieldCheck className="size-5 text-[#d46b4e]" />
+                MEMBER ID VERIFICATION
+              </h3>
+              <p className="text-xs font-mono-label text-[#d46b4e] uppercase tracking-widest mt-1">
+                Enter unique ID to check registry validity
+              </p>
+            </div>
+
+            <form onSubmit={handleSubmit} className="space-y-5">
+              <div>
+                <label className="block text-xs font-mono-label uppercase tracking-wider text-[#1a1a1a] mb-2 font-bold">
+                  Unique Member ID
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={memberId}
+                  onChange={(e) => setMemberId(e.target.value)}
+                  placeholder="e.g. NG-XYZ2026..."
+                  className="w-full bg-[#f6f5f0] border-2 border-[#1a1a1a] px-4 py-3.5 text-sm focus:outline-none focus:ring-1 focus:ring-[#d46b4e] font-bold uppercase tracking-wider"
+                />
+              </div>
+
+              <button 
+                type="submit" 
+                className="btn-retro-primary w-full py-4 text-sm font-bold flex justify-center items-center gap-2 cursor-pointer"
+              >
+                <Search className="size-4" />
+                VERIFY NOW
+              </button>
+            </form>
+          </div>
+        )}
       </div>
     </div>
   );
