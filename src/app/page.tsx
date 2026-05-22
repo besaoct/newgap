@@ -136,16 +136,16 @@ function AnimatedRightSide() {
 
   return (
     <div className="relative w-full max-w-lg mx-auto aspect-square flex items-center justify-center overflow-hidden">
-      <svg viewBox="0 0 950 950" className="w-full h-full select-none pointer-events-none">
-        <circle cx="495" cy="475" r="280" fill="#f6f5f0" />
-        <circle cx="495" cy="475" r="300" fill="none" stroke="#22572c" strokeWidth="50" />
+      <svg viewBox="0 0 900 900" className="w-full h-full select-none pointer-events-none">
+        {/* <circle cx="495" cy="475" r="280" fill="#f6f5f0" />
+        <circle cx="495" cy="475" r="300" fill="none" stroke="#22572c" strokeWidth="50" /> */}
         <g>
           <path
             className="animate-lightning"
             d="M 475 120 L 710 145 L 590 350 L 690 350 L 565 555 L 660 555 L 310 790 L 435 555 L 330 555 L 455 350 L 360 350 Z"
             fill="#d46b4e"
             stroke="#d46b4e"
-            strokeWidth="4"
+            strokeWidth="20"
             strokeLinejoin="miter"
             strokeLinecap="round"
           />
@@ -221,7 +221,7 @@ function Hero({ onVerifyClick }: { onVerifyClick: () => void }) {
             </Link>
             <h1 className="text-headline-xl-mobile sm:text-headline-xl font-headline-xl text-on-surface mb-8 uppercase leading-[0.95] tracking-tight"> 
               <span className="text-secondary">NEW</span><span className="text-primary">GAP</span> IS THE ONLY <br/> WAY TO <br />
-              <span className="text-secondary ">FILL THE GAP.</span>
+              <span className="text-secondary  font-black">FILL THE GAP.</span>
             </h1>
      
             <div className="mb-12">
