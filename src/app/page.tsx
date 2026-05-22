@@ -137,8 +137,6 @@ function AnimatedRightSide() {
   return (
     <div className="relative w-full max-w-lg mx-auto aspect-square flex items-center justify-center overflow-hidden">
       <svg viewBox="0 0 900 900" className="w-full h-full select-none pointer-events-none">
-        {/* <circle cx="495" cy="475" r="280" fill="#f6f5f0" />
-        <circle cx="495" cy="475" r="300" fill="none" stroke="#22572c" strokeWidth="50" /> */}
         <g>
           <path
             className="animate-lightning"
