@@ -28,19 +28,22 @@ NEWGAP aligns directly with the values enshrined in the Preamble to the Constitu
 We demand professional excellence from our representatives to ensure qualified decision-making:
 
 *   **Any Candidate (Neta)**: Minimum Bachelor's Degree + rigorous screening + clean criminal record.
-*   **Prime Minister**: PhD in any field + demonstrated secular values + passes independent merit review.
-*   **Finance Minister**: Established economist with a verifiable, professional track record.
 *   **Education Minister**: PhD holder + 10+ years of active teaching experience + published academic research.
+*   **Finance Minister**: Established economist with a verifiable, professional track record.
+*   **Prime Minister**: PhD in any field + demonstrated secular values + passes independent merit review.
 
 ---
 
 ## 🗳️ Key Policies We Stand For
 
-*   **Zero Corruption**: Complete financial disclosure for all candidates and candidates' families; transparent crowdsourced funding.
-*   **50% Women in Power**: Direct 50% reservation in Parliament and Cabinet positions to ensure gender parity.
-*   **Independent Judiciary**: Prohibit Rajya Sabha seats or executive government appointments as post-retirement rewards for Chief Justices.
+*   **Zero Corruption**: Complete financial disclosure for all candidates and their families; refuse all corporate donations in favor of transparent crowdsourced funding.
+*   **Educated Leadership**: Enforce academic qualifications for representatives (candidates need a Bachelor's; Education and PM roles require a PhD).
+*   **Law & Uncompromising Justice**: Swift **death execution** for heinous crimes (premeditated murder, rape, kidnapping with assault) and the **Retaliation Prevention Act** to protect whistleblowers and journalists.
+*   **50% Women in Power**: Direct 50% reservation in Parliament and Cabinet positions to ensure gender parity without expanding the legislature.
 *   **Anti-Defection**: Any MLA or MP who defects from their winning party is barred from contesting any election or holding public office for **20 years**.
+*   **Independent Judiciary**: Prohibit post-retirement rewards, such as Rajya Sabha seats or executive appointments, for Chief Justices to keep the judiciary independent.
 *   **Independent Media**: Review and cancel media licenses captured by monopoly ownerships to restore press independence.
+*   **Digital-First & Education**: Implement digital grievance portals with strict timelines, open-source governance, and universal quality education for every citizen.
 
 ---
 

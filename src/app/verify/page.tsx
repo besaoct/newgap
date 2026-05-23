@@ -4,6 +4,7 @@ import React, { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, Search, Loader2, ShieldCheck, ShieldAlert } from "lucide-react";
+import { partyInfo } from "@/data/content";
 
 function VerificationContent() {
   const searchParams = useSearchParams();
@@ -72,18 +73,23 @@ function VerificationContent() {
       <div className="w-full h-1.5 bg-[#d46b4e] shrink-0" />
 
       {/* Main Content Area */}
-      <main className="flex-1 flex flex-col items-center justify-center p-6 my-12 w-full max-w-4xl mx-auto">
-        <Link 
+       <main className="flex-1 max-w-4xl w-full mx-auto px-6 py-12">
+      
+        <div className="text-center mb-6">
+
+           <Link 
           href="/" 
-          className="group mb-8 inline-flex items-center gap-2 text-xs font-bold tracking-wider uppercase text-[#1a1a1a]/70 hover:text-[#1a1a1a] transition-colors bg-[#f6f5f0] border-2 border-[#1a1a1a] px-4 py-2 rounded-sm shadow-[2px_2px_0px_#1a1a1a] hover:translate-y-px hover:shadow-[1px_1px_0px_#1a1a1a]"
+          className="group mb-12 inline-flex items-center gap-2 text-xs font-bold tracking-wider uppercase text-[#1a1a1a]/70 hover:text-[#1a1a1a] transition-colors bg-[#f6f5f0] border-2 border-[#1a1a1a] px-4 py-2 rounded-sm shadow-[2px_2px_0px_#1a1a1a] hover:translate-y-px hover:shadow-[1px_1px_0px_#1a1a1a]"
         >
           <ArrowLeft className="size-3.5 group-hover:-translate-x-0.5 transition-transform" />
           Back to Homepage
         </Link>
+        </div>
+
 
         {/* Portal Title */}
-        <div className="text-center mb-8">
-          <h1 className="text-2xl sm:text-3xl font-headline-md tracking-tight uppercase font-extrabold text-[#1a1a1a]">
+        <div className="text-center mb-12">
+          <h1 className="font-black text-3xl md:text-4xl  font-headline-md tracking-tight uppercase text-[#1a1a1a]">
             VERIFICATION <span className="text-[#d46b4e]">PORTAL</span>
           </h1>
           <p className="text-xs uppercase text-[#888880] tracking-widest font-black mt-2">
@@ -92,7 +98,7 @@ function VerificationContent() {
         </div>
 
         {/* Verification Card */}
-        <div className="w-full max-w-lg bg-[#f6f5f0] border-2 border-[#1a1a1a] p-6 sm:p-8 relative shadow-[8px_8px_0px_#1a1a1a] overflow-hidden">
+        <div className="w-full bg-[#f6f5f0] border-2 border-[#1a1a1a] p-6 sm:p-8 relative shadow-[8px_8px_0px_#1a1a1a] overflow-hidden">
           {/* Card Top Stripe */}
           <div className="absolute top-0 inset-x-0 h-1.5 bg-[#22572c]" />
 
@@ -247,10 +253,18 @@ function VerificationContent() {
       </main>
 
       {/* Footer Branding */}
-      <footer className="w-full border-t border-[#1a1a1a]/10 py-6 text-center bg-[#f6f5f0]/80 shrink-0">
-        <p className="text-[10px] text-[#888880] uppercase tracking-widest font-black">
-          NEWGAP · SECURE MEMBERSHIP VERIFICATION PROTOCOL · INDIA 🇮🇳
-        </p>
+      <footer className="border-t border-on-surface/10 py-10 w-full bg-[#f6f5f0]/80 shrink-0">
+        <div className="max-w-7xl mx-auto w-full px-container-padding-mobile lg:px-container-padding-desktop flex flex-col lg:flex-row items-center justify-between gap-4 text-mono-label font-mono-label uppercase tracking-widest text-on-surface-variant">
+          <div>
+            <span className="text-secondary">NEW</span><span className="text-primary font-bold">GAP</span> · {partyInfo.preamble.founding}
+          </div>
+          <div className="font-mono-label text-[10px]">{partyInfo.hq}</div>
+          <div className="font-semibold text-xs flex gap-4 items-center">
+            <Link href="/manifesto" className="hover:text-primary transition-colors text-on-surface-variant">Manifesto</Link>
+            <span>·</span>
+            <span className="text-on-surface-variant">© NEWGAP — No Rights Reserved</span>
+          </div>
+        </div>
       </footer>
     </div>
   );

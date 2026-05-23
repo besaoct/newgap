@@ -46,11 +46,12 @@
   --font-body-md: var(--font-sora), sans-serif;
   --font-label-caps: var(--font-sora), sans-serif;
   --font-mono-label: var(--font-sora), sans-serif;
+  --font-hand: var(--font-lugrasimo), sans-serif;
 
-  --text-headline-xl: clamp(3.5rem, 7vw, 6.5rem);
+  --text-headline-xl: clamp(3.5rem, 7.5vw, 6.5rem);
   --text-headline-lg: clamp(3.75rem, 5vw, 3.75rem);
   --text-headline-lg-mobile: 2.25rem;
-  --text-headline-xl-mobile: 3.5rem;
+  --text-headline-xl-mobile: 2.5rem;
   --text-headline-md: 1.75rem;
   --text-body-lg: 1.25rem;
   --text-body-md: 1rem;

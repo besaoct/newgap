@@ -6,7 +6,8 @@ export const partyInfo = {
   taglines: [
     "Sovereign. Socialist. Secular. Democratic. Republic. Justice.",
     "Educated leadership · Secular unity · Socialist justice · Corruption-free future.",
-    "NEWGAP is the only way to fill the gap."
+    "NEWGAP is the only way to fill the gap.",
+    "Clear code. Decisive execution. New Gen Led."
   ],
   preamble: {
     subtitle: "The Constitution is not a suggestion. It is a promise. A founding contract of every Indian with every other Indian. We are here to enforce it.",
@@ -17,8 +18,8 @@ export const partyInfo = {
 
 export const preamble = {
   quote: "WE, THE PEOPLE OF INDIA, having solemnly resolved to constitute India into a SOVEREIGN SOCIALIST SECULAR DEMOCRATIC REPUBLIC and to secure to all its citizens — JUSTICE, social, economic and political; LIBERTY of thought, expression, belief, faith and worship; EQUALITY of status and of opportunity; and to promote among them all FRATERNITY assuring the dignity of the individual and the unity and integrity of the Nation — in our Constituent Assembly this twenty-sixth day of November, 1949, do HEREBY ADOPT, ENACT AND GIVE TO OURSELVES THIS CONSTITUTION.",
-  body: "This is not a relic. This is not a preamble to be recited and forgotten on Republic Day. This is the founding contract of every Indian with every other Indian. NEWGAP — the New Generation Action Party — exists because that contract has been repeatedly broken. We are here to enforce it.",
-  closing: "We did not form this party to rebrand corruption as governance. We did not form it to divide India by faith, caste, or language for votes. We formed it because the gap between what India promised its people and what India has delivered to its people has grown wide enough to swallow entire generations.",
+  body: "India is not a failed country. India is a promise that has been repeatedly betrayed by the people entrusted to keep it. The Constitution is not broken; the people charged with upholding it have repeatedly chosen not to. NEWGAP — the New Generation Action Party — exists to enforce that contract.",
+  closing: "We reject the legacy of transactional politics, dynasty rule, and corporate-sponsored campaigns. We compile a new system built on transparent code, peer-to-peer accountability, and merit-driven action.",
   highlights: ["SOVEREIGN", "SOCIALIST", "SECULAR", "DEMOCRATIC", "REPUBLIC", "JUSTICE", "LIBERTY", "EQUALITY", "FRATERNITY"] 
 };
 
@@ -86,9 +87,9 @@ export const whatWeStandFor = [
     title: "Educated Leadership. Always.",
     items: [
       "Every Neta (candidate at any level): minimum bachelor's degree + rigorous interview process + clean criminal record",
-      "Prime Minister: PhD in any field + demonstrated secular values + passes independent merit review",
+      "Education Minister: PhD holder with 10+ years of active teaching experience and published research",
       "Finance Minister: established economist with a verifiable track record",
-      "Education Minister: PhD holder with 10+ years of active teaching experience and published research"
+      "Prime Minister: PhD in any field + demonstrated secular values + passes independent merit review"
     ]
   },
   {
@@ -117,11 +118,11 @@ export const whatWeStandFor = [
     ]
   },
   {
-    title: "Independent Judiciary.",
+    title: "Justice & Order.",
     items: [
-      "No Chief Justice shall receive a Rajya Sabha seat or any government appointment after retirement",
-      "The judiciary must remain free of executive gratitude",
-      "Justice cannot be transactional"
+      "Mandate death execution for premeditated murder, rape, and kidnapping with assault",
+      "Enact the Retaliation Prevention Act to protect whistleblowers, journalists, and citizens from state/corporate retaliation",
+      "No Chief Justice shall receive a Rajya Sabha seat or any government appointment after retirement to keep the judiciary free of executive gratitude"
     ]
   },
   {
@@ -271,7 +272,9 @@ export const constitutionalValues = [
   { label: "Independent judiciary", type: "gray" },
   { label: "50% women in power", type: "gray" },
   { label: "Free & independent media", type: "gray" },
-  { label: "Anti-defection, always", type: "gray" }
+  { label: "Anti-defection, always", type: "gray" },
+  { label: "Death execution for heinous crimes", type: "gray" },
+  { label: "Protection from retaliation crimes", type: "gray" }
 ];
 
 export const gapBanner = {

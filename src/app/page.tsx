@@ -47,15 +47,15 @@ function FormattedText({ text }: { text: string }) {
 // Cockroach Vector SVG Component
 function CockroachSvg({ className }: { className?: string }) {
   return (
-   <svg className={className} viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <circle cx="32" cy="32" r="29" fill="none" stroke="#E0651E" strokeWidth="3" strokeDasharray="46 1000" transform="rotate(-90 32 32)"></circle>
-          <circle cx="32" cy="32" r="29" fill="none" stroke="#1F5A2E" strokeWidth="3" strokeDasharray="46 1000" transform="rotate(30 32 32)"></circle>
-          <circle cx="32" cy="32" r="29" fill="none" stroke="#2A1A10" strokeWidth="0.8"></circle>
-          <ellipse cx="32" cy="36" rx="11" ry="16" fill="#5A2F12"></ellipse>
-          <ellipse cx="32" cy="25" rx="7" ry="6" fill="#5A2F12"></ellipse>
-          <path d="M28 17 Q22 10 18 8 M36 17 Q42 10 46 8" stroke="#2A1A10" strokeWidth="1.6" fill="none" strokeLinecap="round"></path>
-          <rect x="26" y="23" width="12" height="3.5" rx="1" fill="#0a0807"></rect>
-        </svg>
+    <svg className={className} viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <circle cx="32" cy="32" r="29" fill="none" stroke="#E0651E" strokeWidth="3" strokeDasharray="46 1000" transform="rotate(-90 32 32)"></circle>
+      <circle cx="32" cy="32" r="29" fill="none" stroke="#1F5A2E" strokeWidth="3" strokeDasharray="46 1000" transform="rotate(30 32 32)"></circle>
+      <circle cx="32" cy="32" r="29" fill="none" stroke="#2A1A10" strokeWidth="0.8"></circle>
+      <ellipse cx="32" cy="36" rx="11" ry="16" fill="#5A2F12"></ellipse>
+      <ellipse cx="32" cy="25" rx="7" ry="6" fill="#5A2F12"></ellipse>
+      <path d="M28 17 Q22 10 18 8 M36 17 Q42 10 46 8" stroke="#2A1A10" strokeWidth="1.6" fill="none" strokeLinecap="round"></path>
+      <rect x="26" y="23" width="12" height="3.5" rx="1" fill="#0a0807"></rect>
+    </svg>
   );
 }
 
@@ -158,35 +158,36 @@ function Nav({ onJoinClick }: { onJoinClick: () => void }) {
     <header className="fixed top-0 inset-x-0 z-50 backdrop-blur-md bg-background/70 border-b border-on-surface/10">
       <div className={`${MAX} ${PAD} flex items-center justify-between h-24 gap-10`}>
         <Link href="/" className="flex items-center justify-center gap-0">
-          <NextImage 
-          width={100}
-          height={100}
-          priority
-          fetchPriority="high"
-          loading="eager"  
-          src="/logo-transparent.png" alt="NEWGAP Logo" className="size-16 object-contain" />
-       
+          <NextImage
+            width={100}
+            height={100}
+            priority
+            fetchPriority="high"
+            loading="eager"
+            src="/logo-transparent.png" alt="NEWGAP Logo" className="size-16 object-contain" />
+
           <div className="flex flex-col  justify-center items-start">
             <div className="flex gap-0 text-headline-md leading-[0.85]  uppercase font-headline-xl text-on-surface"> <span className=" leading-[0.85] text-secondary">NEW
             </span>
-            <span className=" text-primary leading-[0.85]">
-              GAP
-            </span>
+              <span className=" text-primary leading-[0.85]">
+                GAP
+              </span>
             </div>
-          <p className="font-semibold tracking-wider leading-2.5 text-[7px] text-secondary uppercase">New <span className="text-primary">
-            Generation Action Party</span></p>
-       
+            <p className="font-semibold tracking-wider leading-2.5 text-[7px] text-secondary uppercase">New <span className="text-primary">
+              Generation Action Party</span></p>
+
             <span className="mt-0.5 text-[8px] tracking-wider font-mono  text-primary uppercase font-thin">
-               INDIA · EST. 2026
+              INDIA · EST. 2026
             </span>
           </div>
         </Link>
         <nav className="hidden lg:flex items-center gap-6  uppercase tracking-widest font-mono-label font-semibold  text-on-surface-variant">
-          <a href="#preamble" className="hover:text-primary transition-colors">Preamble</a>
+          {/* <a href="#preamble" className="hover:text-primary transition-colors">Preamble</a> */}
+          <Link href="/manifesto" className="hover:text-primary transition-colors">Manifesto</Link>
           <a href="#pillars" className="hover:text-primary transition-colors">Tenets</a>
           <a href="#stand" className="hover:text-primary transition-colors">Stand</a>
           <a href="#alliance" className="hover:text-primary transition-colors">Alliance</a>
-               <a href="#commitment" className="hover:text-primary transition-colors">Commitment</a>
+          <a href="#commitment" className="hover:text-primary transition-colors">Commitment</a>
         </nav>
         <button onClick={onJoinClick} className="btn-retro-primary px-6 py-3 text-xs font-bold">
           Join
@@ -204,10 +205,10 @@ function Hero({ onVerifyClick }: { onVerifyClick: () => void }) {
         <div className="grid lg:grid-cols-12 gap-16 items-center">
           {/* Left Column - Texts & Actions */}
           <div className="lg:col-span-7 text-left flex flex-col items-start">
-           {/* <p className="text-body-md font-mono-label uppercase tracking-[0.3em] text-on-surface-variant mb-2 font-bold"><FormattedText text={partyInfo.fullName} /></p> */}
+            {/* <p className="text-body-md font-mono-label uppercase tracking-[0.3em] text-on-surface-variant mb-2 font-bold"><FormattedText text={partyInfo.fullName} /></p> */}
             <Link
-              href="https://github.com/besaoct/newgap" 
-              target="_blank" 
+              href="https://github.com/besaoct/newgap"
+              target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 mb-6 group cursor-pointer "
             >
@@ -217,11 +218,11 @@ function Hero({ onVerifyClick }: { onVerifyClick: () => void }) {
                 <ArrowUpRight className="size-3.5 inline transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 text-secondary" />
               </span>
             </Link>
-            <h1 className="text-headline-xl-mobile sm:text-headline-xl font-headline-xl text-on-surface mb-8 uppercase leading-[0.95] tracking-tight"> 
-              <span className="text-secondary">NEW</span><span className="text-primary">GAP</span> IS THE ONLY <br/> WAY TO <br />
-              <span className="text-secondary  font-black">FILL THE GAP.</span>
+            <h1 className="text-headline-xl-mobile sm:text-headline-xl  text-on-surface mb-8 uppercase leading-[0.95] tracking-tight  font-headline-xl font-black">
+              <span className="">Clear code.</span> <br />
+              <span className="text-primary"> Decisive execution.</span> <br />
+              <span className="text-secondary ">New Gen Led.</span>
             </h1>
-     
             <div className="mb-12">
               <blockquote className="text-body-lg font-serif text-on-surface-variant leading-relaxed  border-l-2 border-primary/30 pl-8 text-left ">
                 <FormattedText text={partyInfo.preamble.subtitle} />
@@ -232,7 +233,7 @@ function Hero({ onVerifyClick }: { onVerifyClick: () => void }) {
                 {ctas.primary.label.replace("↗", "").trim()}
                 <ArrowUpRight className="w-4 h-4 shrink-0" />
               </a>
-              <button 
+              <button
                 onClick={onVerifyClick}
                 className="btn-retro-secondary group px-12 py-6 text-sm font-bold w-full sm:w-auto text-center flex items-center justify-center gap-1.5 cursor-pointer"
               >
@@ -278,7 +279,7 @@ function Preamble() {
   );
 }
 
-function FiveWordsSection() {
+function SixWordsSection() {
   return (
     <section className={`py-32  overflow-hidden`}>
       <div className={`${MAX} ${PAD}`}>
@@ -442,8 +443,8 @@ function SharedValues() {
 function ConstitutionalValues() {
   const color = (t: string) =>
     t === "orange" ? "border-primary/45 text-primary bg-primary/5 hover:bg-primary/10"
-    : t === "green" ? "border-secondary/45 text-secondary bg-secondary/5 hover:bg-secondary/10"
-    : "border-on-surface/30 text-on-surface-variant bg-surface-container-low";
+      : t === "green" ? "border-secondary/45 text-secondary bg-secondary/5 hover:bg-secondary/10"
+        : "border-on-surface/30 text-on-surface-variant bg-surface-container-low";
   return (
     <section className={`py-32 bg-surface-container-lowest border-y border-on-surface/10`}>
       <div className={`${MAX} ${PAD}`}>
@@ -503,7 +504,7 @@ function Join({ onJoinClick }: { onJoinClick: () => void }) {
               <p className="text-body-md text-on-surface-variant  leading-relaxed font-light">{whoCanJoin.membership}</p>
             </div>
             <div className="flex justify-center items-center my-6">
-  
+
               <img src="/logo-transparent.png" alt="NEWGAP Logo" className="h-64 w-auto object-contain" />
             </div>
             <button onClick={onJoinClick} className="btn-retro-primary w-full py-5 text-sm font-bold">
@@ -532,7 +533,7 @@ function Alliance() {
               </div>
             </div>
             <h2 className="text-headline-lg-mobile md:text-headline-lg font-headline-xl uppercase mb-4 leading-none text-on-surface font-extrabold tracking-tighter">
-          <span className="text-primary ">Cockroach</span> Janta Party
+              <span className="text-primary ">Cockroach</span> Janta Party
             </h2>
             <p className="text-mono-label text-on-surface-variant uppercase tracking-widest mb-10 font-bold font-mono-label">{allianceSection.sub}</p>
             <div className="space-y-4 mb-8">
@@ -601,7 +602,11 @@ function Footer() {
         <div className="">
           <span className="text-secondary">NEW</span><span className="text-primary font-bold">GAP</span> · {partyInfo.preamble.founding}</div>
         <div className="font-mono-label text-[10px]">{partyInfo.hq}</div>
-        <div className="font-semibold text-xs">© NEWGAP — No Rights Reserved</div>
+        <div className="font-semibold text-xs flex gap-4 items-center">
+          <Link href="/manifesto" className="hover:text-primary transition-colors">Manifesto</Link>
+          <span>·</span>
+          <span>© NEWGAP — No Rights Reserved</span>
+        </div>
       </div>
     </footer>
   );
@@ -618,7 +623,7 @@ function Index() {
       <main className="pt-16">
         <Hero onVerifyClick={() => setIsVerifyModalOpen(true)} />
         <Preamble />
-        <FiveWordsSection />
+        <SixWordsSection />
         <Pillars />
         <WhatWeStandFor />
         <Leadership />
@@ -711,191 +716,191 @@ function MembershipModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => 
 
 
 
-const buildCardCanvas = (): Promise<HTMLCanvasElement> => {
-  return new Promise(async (resolve) => {
-    // wait for Sora to be available
-    await document.fonts.load("bold 28px 'Sora'");
-    await document.fonts.load("400 16px 'Sora'");
+  const buildCardCanvas = (): Promise<HTMLCanvasElement> => {
+    return new Promise(async (resolve) => {
+      // wait for Sora to be available
+      await document.fonts.load("bold 28px 'Sora'");
+      await document.fonts.load("400 16px 'Sora'");
 
-    const canvas = document.createElement("canvas");
-    const scale  = 2;
-    const W = 860, H = 440;
-    canvas.width  = W * scale;
-    canvas.height = H * scale;
+      const canvas = document.createElement("canvas");
+      const scale = 2;
+      const W = 860, H = 440;
+      canvas.width = W * scale;
+      canvas.height = H * scale;
 
-    const ctx = canvas.getContext("2d")!;
-    ctx.scale(scale, scale);
+      const ctx = canvas.getContext("2d")!;
+      ctx.scale(scale, scale);
 
-    const SORA = (size: number, weight: 400 | 600 | 700 | 800 = 400) =>
-      `${weight} ${size}px 'Sora', sans-serif`;
+      const SORA = (size: number, weight: 400 | 600 | 700 | 800 = 400) =>
+        `${weight} ${size}px 'Sora', sans-serif`;
 
-    const label = (text: string, lx: number, ly: number) => {
-      ctx.fillStyle = "#888880";
-      ctx.font = SORA(14, 700);
-      ctx.fillText(text.toUpperCase(), lx, ly);
-    };
+      const label = (text: string, lx: number, ly: number) => {
+        ctx.fillStyle = "#888880";
+        ctx.font = SORA(14, 700);
+        ctx.fillText(text.toUpperCase(), lx, ly);
+      };
 
-    const drawContent = () => {
-      const x = 96;
+      const drawContent = () => {
+        const x = 96;
 
-      // ── background ─────────────────────────────────────
-      ctx.fillStyle = "#f6f5f0";
-      ctx.fillRect(0, 0, W, H);
+        // ── background ─────────────────────────────────────
+        ctx.fillStyle = "#f6f5f0";
+        ctx.fillRect(0, 0, W, H);
 
-      // ── border ─────────────────────────────────────────
-      ctx.strokeStyle = "#e0ddd6";
-      ctx.lineWidth = 1;
-      ctx.strokeRect(0.5, 0.5, W - 1, H - 1);
+        // ── border ─────────────────────────────────────────
+        ctx.strokeStyle = "#e0ddd6";
+        ctx.lineWidth = 1;
+        ctx.strokeRect(0.5, 0.5, W - 1, H - 1);
 
-      // ── left stripes ───────────────────────────────────
-      ctx.fillStyle = "#22572c";
-      ctx.fillRect(0, 0, 32, H);
-      ctx.fillStyle = "#d46b4e";
-      ctx.fillRect(32, 0, 16, H);
+        // ── left stripes ───────────────────────────────────
+        ctx.fillStyle = "#22572c";
+        ctx.fillRect(0, 0, 32, H);
+        ctx.fillStyle = "#d46b4e";
+        ctx.fillRect(32, 0, 16, H);
 
-      // ── title ──────────────────────────────────────────
-      ctx.fillStyle = "#1a1a1a";
-      ctx.font = SORA(28, 800);
-      ctx.fillText("NEWGAP MEMBER ID", x, 76);
+        // ── title ──────────────────────────────────────────
+        ctx.fillStyle = "#1a1a1a";
+        ctx.font = SORA(28, 800);
+        ctx.fillText("NEWGAP MEMBER ID", x, 76);
 
-      // line 1 — official party name
-      ctx.fillStyle = "#d46b4e";
-      ctx.font = SORA(16, 700);
-      ctx.fillText(partyInfo.fullName.toUpperCase(), x, 96);
+        // line 1 — official party name
+        ctx.fillStyle = "#d46b4e";
+        ctx.font = SORA(16, 700);
+        ctx.fillText(partyInfo.fullName.toUpperCase(), x, 96);
 
-      // line 2 — founding info
-      ctx.fillStyle = "#888880";
-      ctx.font = SORA(14, 400);
-      ctx.fillText(partyInfo.preamble.founding.toUpperCase(), x, 114);
+        // line 2 — founding info
+        ctx.fillStyle = "#888880";
+        ctx.font = SORA(14, 400);
+        ctx.fillText(partyInfo.preamble.founding.toUpperCase(), x, 114);
 
-      // ── divider ────────────────────────────────────────
-      ctx.strokeStyle = "#d0cdc6";
-      ctx.lineWidth = 1;
-      ctx.beginPath();
-      ctx.moveTo(x, 132);
-      ctx.lineTo(W - 48, 132);
-      ctx.stroke();
+        // ── divider ────────────────────────────────────────
+        ctx.strokeStyle = "#d0cdc6";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(x, 132);
+        ctx.lineTo(W - 48, 132);
+        ctx.stroke();
 
-      // ── NAME ───────────────────────────────────────────
-      label("Name", x, 166);
-      ctx.fillStyle = "#1a1a1a";
-      ctx.font = SORA(24, 700);
-      ctx.fillText(formData.name.toUpperCase(), x, 192);
+        // ── NAME ───────────────────────────────────────────
+        label("Name", x, 166);
+        ctx.fillStyle = "#1a1a1a";
+        ctx.font = SORA(24, 700);
+        ctx.fillText(formData.name.toUpperCase(), x, 192);
 
-      // ── MEMBER UNIQUE ID ───────────────────────────────
-      label("Member Unique ID", x, 226);
-      ctx.fillStyle = "#22572c";
-      ctx.font = SORA(28, 800);
-      ctx.fillText(uniqueId, x, 256);
+        // ── MEMBER UNIQUE ID ───────────────────────────────
+        label("Member Unique ID", x, 226);
+        ctx.fillStyle = "#22572c";
+        ctx.font = SORA(28, 800);
+        ctx.fillText(uniqueId, x, 256);
 
-      // ── PHONE + DOB ────────────────────────────────────
-      label("Phone", x, 292);
-      ctx.fillStyle = "#1a1a1a";
-      ctx.font = SORA(20, 600);
-      ctx.fillText(formData.phone, x, 314);
+        // ── PHONE + DOB ────────────────────────────────────
+        label("Phone", x, 292);
+        ctx.fillStyle = "#1a1a1a";
+        ctx.font = SORA(20, 600);
+        ctx.fillText(formData.phone, x, 314);
 
-      label("D.O.B", W / 2, 292);
-      ctx.fillStyle = "#1a1a1a";
-      ctx.font = SORA(20, 600);
-      ctx.fillText(formData.dob, W / 2, 314);
+        label("D.O.B", W / 2, 292);
+        ctx.fillStyle = "#1a1a1a";
+        ctx.font = SORA(20, 600);
+        ctx.fillText(formData.dob, W / 2, 314);
 
-      // ── EMAIL + ISSUE DATE ─────────────────────────────
-      label("Email", x, 350);
-      ctx.fillStyle = "#555550";
-      ctx.font = SORA(20, 400);
-      ctx.fillText(formData.email.toLowerCase(), x, 372);
+        // ── EMAIL + ISSUE DATE ─────────────────────────────
+        label("Email", x, 350);
+        ctx.fillStyle = "#555550";
+        ctx.font = SORA(20, 400);
+        ctx.fillText(formData.email.toLowerCase(), x, 372);
 
-      label("Issue Date", W / 2, 350);
-      ctx.fillStyle = "#1a1a1a";
-      ctx.font = SORA(20, 600);
-      ctx.fillText(issueDate, W / 2, 372);
-    };
+        label("Issue Date", W / 2, 350);
+        ctx.fillStyle = "#1a1a1a";
+        ctx.font = SORA(20, 600);
+        ctx.fillText(issueDate, W / 2, 372);
+      };
 
-    // Load logo and QR code
-    const logoImg = new Image(); 
-    logoImg.crossOrigin = "anonymous";
-    logoImg.src = "/logo-transparent.png";
+      // Load logo and QR code
+      const logoImg = new Image();
+      logoImg.crossOrigin = "anonymous";
+      logoImg.src = "/logo-transparent.png";
 
-    const qrImg = new Image();
-    const origin = typeof window !== "undefined" ? window.location.origin : "https://newgap.org";
-    const verificationUrl = origin ? `${origin}/verify?id=${uniqueId}` : uniqueId;
-    const qrUrl = qrCodeDataUrl || (await QRCode.toDataURL(verificationUrl, { margin: 1, width: 300 }));
-    qrImg.src = qrUrl;
+      const qrImg = new Image();
+      const origin = typeof window !== "undefined" ? window.location.origin : "https://newgap.org";
+      const verificationUrl = origin ? `${origin}/verify?id=${uniqueId}` : uniqueId;
+      const qrUrl = qrCodeDataUrl || (await QRCode.toDataURL(verificationUrl, { margin: 1, width: 300 }));
+      qrImg.src = qrUrl;
 
-    let logoLoaded = false;
-    let qrLoaded = false;
+      let logoLoaded = false;
+      let qrLoaded = false;
 
-    const checkAndResolve = () => {
-      if (logoLoaded && qrLoaded) {
-        drawContent();
-        
-        // Draw logo
-        if (logoImg.complete && logoImg.naturalWidth !== 0) {
-          ctx.drawImage(logoImg, W - 48 - 96, 36, 96, 96);
-        } else {
-          // fallback fist placeholder
-          ctx.fillStyle = "#22572c";
-          ctx.beginPath();
-          ctx.arc(W - 48 - 48, 84, 40, 0, Math.PI * 2);
-          ctx.fill();
+      const checkAndResolve = () => {
+        if (logoLoaded && qrLoaded) {
+          drawContent();
+
+          // Draw logo
+          if (logoImg.complete && logoImg.naturalWidth !== 0) {
+            ctx.drawImage(logoImg, W - 48 - 96, 36, 96, 96);
+          } else {
+            // fallback fist placeholder
+            ctx.fillStyle = "#22572c";
+            ctx.beginPath();
+            ctx.arc(W - 48 - 48, 84, 40, 0, Math.PI * 2);
+            ctx.fill();
+          }
+
+          // Draw QR code
+          if (qrImg.complete && qrImg.naturalWidth !== 0) {
+            ctx.drawImage(qrImg, W - 48 - 155, 225, 155, 155);
+
+            // QR Code label
+            // ctx.fillStyle = "#888880";
+            // ctx.font = SORA(11, 700);
+            // ctx.fillText("SCAN TO VERIFY", W - 48 - 140 + 70 - ctx.measureText("SCAN TO VERIFY").width / 2, 180 + 140 + 20);
+          }
+
+          resolve(canvas);
         }
+      };
 
-        // Draw QR code
-        if (qrImg.complete && qrImg.naturalWidth !== 0) {
-          ctx.drawImage(qrImg, W - 48 - 155, 225, 155, 155);
-           
-          // QR Code label
-          // ctx.fillStyle = "#888880";
-          // ctx.font = SORA(11, 700);
-          // ctx.fillText("SCAN TO VERIFY", W - 48 - 140 + 70 - ctx.measureText("SCAN TO VERIFY").width / 2, 180 + 140 + 20);
-        }
-        
-        resolve(canvas);
-      }
-    };
+      logoImg.onload = () => {
+        logoLoaded = true;
+        checkAndResolve();
+      };
 
-    logoImg.onload = () => {
-      logoLoaded = true;
-      checkAndResolve();
-    };
+      logoImg.onerror = () => {
+        logoLoaded = true;
+        checkAndResolve();
+      };
 
-    logoImg.onerror = () => {
-      logoLoaded = true;
-      checkAndResolve();
-    };
+      qrImg.onload = () => {
+        qrLoaded = true;
+        checkAndResolve();
+      };
 
-    qrImg.onload = () => {
-      qrLoaded = true;
-      checkAndResolve();
-    };
+      qrImg.onerror = () => {
+        qrLoaded = true;
+        checkAndResolve();
+      };
+    });
+  };
 
-    qrImg.onerror = () => {
-      qrLoaded = true;
-      checkAndResolve();
-    };
-  });
-};
+  // ── consumers ──────────────────────────────────────────────
+  const downloadImage = async () => {
+    const canvas = await buildCardCanvas();
+    const a = document.createElement("a");
+    a.download = `NEWGAP_${formData.name.replace(/\s+/g, "_")}.png`;
+    a.href = canvas.toDataURL("image/png");
+    a.click();
+  };
 
-// ── consumers ──────────────────────────────────────────────
-const downloadImage = async () => {
-  const canvas = await buildCardCanvas();
-  const a      = document.createElement("a");
-  a.download   = `NEWGAP_${formData.name.replace(/\s+/g, "_")}.png`;
-  a.href       = canvas.toDataURL("image/png");
-  a.click();
-};
+  const handlePrint = async () => {
+    const canvas = await buildCardCanvas();
+    const dataUrl = canvas.toDataURL("image/png");
 
-const handlePrint = async () => {
-  const canvas  = await buildCardCanvas();
-  const dataUrl = canvas.toDataURL("image/png");
+    const printWindow = window.open("", "_blank");
+    if (!printWindow) {
+      alert("Please allow popups to print your ID card.");
+      return;
+    }
 
-  const printWindow = window.open("", "_blank");
-  if (!printWindow) {
-    alert("Please allow popups to print your ID card.");
-    return;
-  }
-
-  printWindow.document.write(`
+    printWindow.document.write(`
     <!DOCTYPE html>
     <html>
       <head>
@@ -929,28 +934,28 @@ const handlePrint = async () => {
       </body>
     </html>
   `);
-  printWindow.document.close();
-};
+    printWindow.document.close();
+  };
 
 
   if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-100 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-      
+
       {/* Modal Box */}
-      <div 
+      <div
         className="w-full max-w-lg bg-[#f6f5f0] border border-[#1a1a1a] p-8 relative shadow-[8px_8px_0px_#1a1a1a] overflow-hidden"
         onClick={(e) => e.stopPropagation()} // Prevent click propagation, making closing from outside impossible
       >
-           <div className="absolute top-0 inset-x-0 h-1.5 bg-[#22572c]" />
+        <div className="absolute top-0 inset-x-0 h-1.5 bg-[#22572c]" />
 
-        <button 
+        <button
           onClick={onClose}
           className="absolute top-4 right-4 bg-[#f6f5f0] border-2 border-[#1a1a1a] hover:bg-[#d46b4e]/20  font-black transition-all flex items-center justify-center aspect-square select-none w-5 h-5 leading-none z-10"
           style={{ boxShadow: '2px 2px 0px #000' }}
         >
-          <X className="size-4"/>
+          <X className="size-4" />
         </button>
 
         {step === "form" ? (
@@ -1031,8 +1036,8 @@ const handlePrint = async () => {
                 </div>
               )}
 
-              <button 
-                type="submit" 
+              <button
+                type="submit"
                 disabled={isSubmitting}
                 className="btn-retro-primary w-full py-4 text-sm font-bold mt-2 flex justify-center items-center gap-2"
               >
@@ -1054,8 +1059,8 @@ const handlePrint = async () => {
             <p className="text-body-md text-[#666666] mb-8 leading-relaxed">
               We have processed your application. Click continue to generate and render your official, unique <span className="font-bold text-[#d46b4e]">NEWGAP MEMBER ID card</span>.
             </p>
-            <button 
-              onClick={() => setStep("card")} 
+            <button
+              onClick={() => setStep("card")}
               className="btn-retro-primary w-full py-4 text-sm font-bold"
             >
               CONTINUE
@@ -1073,8 +1078,8 @@ const handlePrint = async () => {
             </div>
 
             {/* Visual representation of the ID card on screen */}
-            <div 
-              ref={cardRef} 
+            <div
+              ref={cardRef}
               id="id-card-preview"
               className="w-full aspect-86/44 border border-[#1a1a1a] shadow-[6px_6px_0px_#1a1a1a] bg-[#f6f5f0] p-4 sm:p-6 font-mono-label relative my-4 flex flex-col justify-between shrink-0"
             >
@@ -1094,11 +1099,11 @@ const handlePrint = async () => {
                       {partyInfo.preamble.founding.toUpperCase()}
                     </p>
                   </div>
-                  
+
                   <img src="/logo-transparent.png" crossOrigin="anonymous" alt="Logo" className="w-9 sm:w-12 h-9 sm:h-12 object-contain -mt-1.5" />
                 </div>
 
-                <div className="h-px bg-[#1a1a1a]/20 mb-3" /> 
+                <div className="h-px bg-[#1a1a1a]/20 mb-3" />
 
                 <div className="flex justify-between items-end gap-3 mt-1 sm:mt-2">
                   <div className="grid grid-cols-1 gap-y-1.5 sm:gap-y-2 text-xs flex-1 min-w-0">
@@ -1133,10 +1138,10 @@ const handlePrint = async () => {
                   </div>
                   {qrCodeDataUrl && (
                     <div className="flex flex-col items-center shrink-0 -mb-1 sm:-mb-2">
-                      <img 
-                        src={qrCodeDataUrl} 
-                        alt="QR Code" 
-                        className="w-14 sm:w-20 h-14 sm:h-20 object-contain border border-[#1a1a1a]/25 p-0.5 bg-white shadow-[2px_2px_0px_rgba(0,0,0,0.1)]" 
+                      <img
+                        src={qrCodeDataUrl}
+                        alt="QR Code"
+                        className="w-14 sm:w-20 h-14 sm:h-20 object-contain border border-[#1a1a1a]/25 p-0.5 bg-white shadow-[2px_2px_0px_rgba(0,0,0,0.1)]"
                       />
                       {/* <span className="text-[5px] sm:text-[7px] uppercase tracking-wider text-[#888880] font-black mt-1 leading-none">SCAN TO VERIFY</span> */}
                     </div>
@@ -1148,13 +1153,13 @@ const handlePrint = async () => {
 
             <div className="w-full space-y-3 mt-4">
               <div className="grid grid-cols-2 gap-3">
-                <button 
+                <button
                   onClick={downloadImage}
                   className="btn-retro-secondary py-3 text-xs font-bold flex justify-center items-center gap-1.5"
                 >
                   <span className="material-symbols-outlined text-sm">download</span> DOWNLOAD PNG
                 </button>
-                <button 
+                <button
                   onClick={handlePrint}
                   className="btn-retro-secondary py-3 text-xs font-bold flex justify-center items-center gap-1.5"
                 >
@@ -1162,7 +1167,7 @@ const handlePrint = async () => {
                 </button>
               </div>
 
-              <button 
+              <button
                 onClick={onClose}
                 className="btn-retro-primary w-full py-3.5 text-xs font-bold"
               >
@@ -1171,7 +1176,7 @@ const handlePrint = async () => {
             </div>
           </div>
         )
-}
+        }
       </div>
     </div>
   );
@@ -1227,16 +1232,16 @@ function VerifyModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
 
   return (
     <div className="fixed inset-0 z-100 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 font-mono-label">
-      <div 
+      <div
         className="w-full max-w-md bg-[#f6f5f0] border border-[#1a1a1a] p-8 relative shadow-[8px_8px_0px_#1a1a1a] overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
-        <button 
+        <button
           onClick={onClose}
           className="absolute top-4 right-4 bg-[#f6f5f0] border-2 border-[#1a1a1a] hover:bg-[#d46b4e]/20 font-black transition-all flex items-center justify-center aspect-square select-none w-5 h-5 leading-none z-10 cursor-pointer"
           style={{ boxShadow: '2px 2px 0px #000' }}
         >
-          <X className="size-4"/>
+          <X className="size-4" />
         </button>
 
         <div className="absolute top-0 inset-x-0 h-1.5 bg-[#22572c]" />
@@ -1359,8 +1364,8 @@ function VerifyModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
                 />
               </div>
 
-              <button 
-                type="submit" 
+              <button
+                type="submit"
                 className="btn-retro-primary w-full py-4 text-sm font-bold flex justify-center items-center gap-2 cursor-pointer"
               >
                 <Search className="size-4" />
