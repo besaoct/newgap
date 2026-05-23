@@ -581,7 +581,7 @@ function FinalWord() {
       <div className={`${MAX} ${PAD}`}>
         <h2 className="text-label-caps font-label-caps text-outline uppercase mb-16 tracking-[1em] font-extrabold">The Commitment</h2>
         {finalWord.lines.map((line) => (
-          <p key={line} className="text-headline-lg-mobile md:text-headline-lg font-headline-xl uppercase mb-10 leading-none text-on-surface font-extrabold tracking-wider">
+          <p key={line} className="text-headline-lg-mobile md:text-headline-xl font-headline-xl uppercase mb-10 leading-none text-on-surface font-extrabold tracking-wide">
             <FormattedText text={line} />
           </p>
         ))}
