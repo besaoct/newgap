@@ -164,7 +164,7 @@ function Nav({ onJoinClick }: { onJoinClick: () => void }) {
             priority
             fetchPriority="high"
             loading="eager"
-            src="/logo-transparent.png" alt="NEWGAP Logo" className="size-16 object-contain" />
+            src="/logo-transparent.png" alt="NEWGAP Logo" className="size-20 object-contain" />
 
           <div className="flex flex-col  justify-center items-start">
             <div className="flex gap-0 text-headline-md leading-[0.85]  uppercase font-headline-xl text-on-surface"> <span className=" leading-[0.85] text-secondary">NEW
